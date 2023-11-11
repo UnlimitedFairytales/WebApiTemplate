@@ -1,8 +1,12 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Organization.Product.Api.Controllers
 {
     [ApiController]
+    [ApiVersion("0.1")]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/[controller]")]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
@@ -18,8 +22,9 @@ namespace Organization.Product.Api.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet()]
+        [MapToApiVersion("0.1")]
+        public IEnumerable<WeatherForecast> Get_0_1()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
@@ -28,6 +33,21 @@ namespace Organization.Product.Api.Controllers
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+
+        [HttpGet()]
+        [MapToApiVersion("1.0")]
+        public IEnumerable<WeatherForecast> Get()
+        {
+            return new WeatherForecast[]
+            {
+                new WeatherForecast()
+                {
+                    Date = DateTime.Now,
+                    TemperatureC = 100,
+                    Summary = "Warm!!!!!!!"
+                }
+            };
         }
     }
 }

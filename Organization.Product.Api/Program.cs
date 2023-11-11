@@ -1,3 +1,6 @@
+using Organization.Product.Api.Middleware.ApiExplorer;
+using Organization.Product.Api.Middleware.Swashbuckle;
+
 namespace Organization.Product.Api
 {
     public class Program
@@ -10,8 +13,10 @@ namespace Organization.Product.Api
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            // builder.Services.AddEndpointsApiExplorer();
+            // builder.Services.AddSwaggerGen();
+            builder.Services.MyAddApiVersioning_AddVersionedApiExplorer(builder.Configuration);
+            builder.Services.MyAddTransient_AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -19,7 +24,8 @@ namespace Organization.Product.Api
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                // app.UseSwaggerUI();
+                app.MyUseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
@@ -72,5 +78,26 @@ https://docs.microsoft.com/ja-jp/aspnet/core/migration/50-to-60-samples?view=asp
 |app.UseEndpoints(x=>{x.MapControllers();}|app.MapControllers();
 
 -
+
+________________________________________________________________________________
+# 2. Asp.Versioning.Mvc.ApiExplorer と Swagger
+________________________________________________________________________________
+Asp.Versioning.Mvc.ApiExplorer（旧名：Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer）
+
+1. URLによるバージョン指定の際、route templateに{version:apiVersion}が使えるようになる。
+2. versionの指定方法はURL、クエリ文字列、ヘッダ、メディアタイプのいずれかから選べる（複数も可）。
+3. Route属性複数指定(マルチ属性ルーティング)、デフォルトバージョンを指定する、省略許可などを組み合わせれば、省略可能URLベースバージョン指定APIが可能。
+
+Swagger側のVersioning対応
+
+1. AddApiVersioningからチェーンさせてAddApiExplorerでAddすると、IApiVersionDescriptionProviderもDIされて取得できるようになる。
+2. IApiVersionDescriptionProviderを取得して、全APIから集計されて用意されたバージョン群の数だけ、SwaggerDocしたりSwaggerEndpointする。
+
+注意点
+
+- ControllerにRoute属性複数指定(マルチ属性ルーティング)している場合、メソッド側ではHttpGet/HttpPost/Route属性などでName(ルート名)は利用できない。
+    - ルート名は一意である必要があるが、Route属性複数指定によって同名のNameを複数回登録しようとしてしまうため。
+    - templateプロパティに[action]がいること自体は問題ない。飽くまでルート名だけが問題。
+    - LinkGeneratorはルート名以外の方法で利用すること
 
 */
