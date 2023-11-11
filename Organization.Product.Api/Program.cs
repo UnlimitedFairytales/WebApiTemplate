@@ -1,4 +1,5 @@
 using Organization.Product.Api.Middleware.ApiExplorer;
+using Organization.Product.Api.Middleware.CorsPolicy;
 using Organization.Product.Api.Middleware.Swashbuckle;
 
 namespace Organization.Product.Api
@@ -17,6 +18,7 @@ namespace Organization.Product.Api
             // builder.Services.AddSwaggerGen();
             builder.Services.MyAddApiVersioning_AddVersionedApiExplorer(builder.Configuration);
             builder.Services.MyAddTransient_AddSwaggerGen();
+            builder.Services.AddCors(options => { options.MyAddCorsPolicies(builder.Configuration); });
 
             var app = builder.Build();
 
@@ -29,6 +31,8 @@ namespace Organization.Product.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.MyUseCorsPolicies(builder.Configuration);
 
             app.UseAuthorization();
 
@@ -99,5 +103,15 @@ Swagger側のVersioning対応
     - ルート名は一意である必要があるが、Route属性複数指定によって同名のNameを複数回登録しようとしてしまうため。
     - templateプロパティに[action]がいること自体は問題ない。飽くまでルート名だけが問題。
     - LinkGeneratorはルート名以外の方法で利用すること
+
+________________________________________________________________________________
+# 3. Angular開発環境 と Cors
+________________________________________________________________________________
+開発環境時のオリジン対応
+
+- AngularなどSPAと連携する構成の場合、開発時にはSPA WebサーバとWeb API Webサーバを別々に立てて別オリジン間通信を行うことになる。
+- localhost:4200はAngular開発環境の初期設定。Reactは3000、Vueは8080 
+- IsDevelopmentやjsonの切り替えはBuild構成ではなく、環境変数ASPNETCORE_ENVIRONMENT
+-- launchSettings.jsonで環境変数違いを用意しておくと楽
 
 */

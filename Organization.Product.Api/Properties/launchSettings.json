@@ -9,7 +9,17 @@
     }
   },
   "profiles": {
-    "Organization.Product.Api": {
+    "(Prod)Organization.Product.Api": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "v0.1/WeatherForecast",
+      "applicationUrl": "https://localhost:7293;http://localhost:5166",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": ""
+      }
+    },
+    "(Dev)Organization.Product.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
