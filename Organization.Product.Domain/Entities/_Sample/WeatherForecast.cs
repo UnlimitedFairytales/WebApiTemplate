@@ -1,4 +1,4 @@
-namespace Organization.Product.Api
+namespace Organization.Product.Domain.Entities._Sample
 {
     public class WeatherForecast
     {

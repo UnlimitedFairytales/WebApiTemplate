@@ -1,7 +1,8 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Organization.Product.Domain.Entities._Sample;
 
-namespace Organization.Product.Api.Controllers
+namespace Organization.Product.Api.Controllers._Sample
 {
     [ApiController]
     [ApiVersion("0.1")]
