@@ -114,4 +114,15 @@ ________________________________________________________________________________
 - IsDevelopmentやjsonの切り替えはBuild構成ではなく、環境変数ASPNETCORE_ENVIRONMENT
 -- launchSettings.jsonで環境変数違いを用意しておくと楽
 
+________________________________________________________________________________
+# 4. 従来のProject System、.NET Core以降のProject System
+________________________________________________________________________________
+https://github.com/dotnet/project-system/blob/main/docs/opening-with-new-project-system.md
+
+次のいずれかの場合、Visual Studioはそのプロジェクトに対して.NET Core以降のProject Systemを使う
+
+- .csproj内に、TargetFramework、TargetFrameworksが含まれていれる（TargetFrameworkVersionではない）
+- .csproj内に、SDK要素やSDK値がある
+- .slnのプロジェクトタイプが、9A19103F-16F7-4668-BE54-9A1E7A4F7556が指定されている
+
 */
