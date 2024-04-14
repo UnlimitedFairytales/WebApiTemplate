@@ -1,6 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Organization.Product.Domain.Entities._Sample;
+using Organization.Product.ApplicationServices.UseCases._Sample;
 
 namespace Organization.Product.Api.Controllers._Sample
 {
@@ -11,11 +11,6 @@ namespace Organization.Product.Api.Controllers._Sample
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
         private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
@@ -25,30 +20,30 @@ namespace Organization.Product.Api.Controllers._Sample
 
         [HttpGet()]
         [MapToApiVersion("0.1")]
-        public IEnumerable<WeatherForecast> Get_0_1()
+        public WeatherForecastResultDto Get_0_1()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var usecase = new WeatherForecastUseCase();
+            var result = usecase.GetWeatherForecastForNext5Days();
+            return result;
         }
 
         [HttpGet()]
         [MapToApiVersion("1.0")]
-        public IEnumerable<WeatherForecast> Get()
+        public WeatherForecastResultDto Get([FromQuery] WeatherForecastRequestDto requestDto)
         {
-            return new WeatherForecast[]
-            {
-                new WeatherForecast()
-                {
-                    Date = DateTime.Now,
-                    TemperatureC = 100,
-                    Summary = "Warm!!!!!!!"
-                }
-            };
+            var usecase = new WeatherForecastUseCase();
+            var result = usecase.Parrot(requestDto, false);
+            return result;
+        }
+
+
+        [HttpPost()]
+        [MapToApiVersion("1.0")]
+        public WeatherForecastResultDto Post(WeatherForecastRequestDto requestDto)
+        {
+            var usecase = new WeatherForecastUseCase();
+            var result = usecase.Parrot(requestDto, true);
+            return result;
         }
     }
 }
