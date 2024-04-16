@@ -6,6 +6,7 @@ namespace Organization.Product.Api.Controllers._Sample
 {
     [ApiController]
     [ApiVersion("0.1")]
+    [ApiVersion("0.2")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [Route("[controller]")]
@@ -25,6 +26,16 @@ namespace Organization.Product.Api.Controllers._Sample
             var usecase = new WeatherForecastUseCase();
             var result = usecase.GetWeatherForecastForNext5Days();
             return result;
+        }
+
+        [HttpPost()]
+        [MapToApiVersion("0.2")]
+        public JsonResult Post_0_2(WeatherForecastRequestDto requestDto)
+        {
+            var usecase = new WeatherForecastUseCase();
+            var result = usecase.Parrot(requestDto, true);
+            // Return result with new JsonSerializerOptions() (null properties exists)
+            return new JsonResult(result, new System.Text.Json.JsonSerializerOptions());
         }
 
         [HttpGet()]

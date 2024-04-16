@@ -1,5 +1,6 @@
 using Organization.Product.Api.Middleware.ApiExplorer;
 using Organization.Product.Api.Middleware.CorsPolicy;
+using Organization.Product.Api.Middleware.JsonSerializerOptions;
 using Organization.Product.Api.Middleware.Swashbuckle;
 
 namespace Organization.Product.Api
@@ -12,7 +13,8 @@ namespace Organization.Product.Api
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .MyAddJsonOptions(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             // builder.Services.AddEndpointsApiExplorer();
             // builder.Services.AddSwaggerGen();
@@ -125,4 +127,10 @@ https://github.com/dotnet/project-system/blob/main/docs/opening-with-new-project
 - .csproj内に、SDK要素やSDK値がある
 - .slnのプロジェクトタイプが、9A19103F-16F7-4668-BE54-9A1E7A4F7556が指定されている
 
+________________________________________________________________________________
+# 5. JavascriptEncoder
+________________________________________________________________________________
+1. nullまたはUnsafeRelaxedJsonEscapingを指定した場合はJSONとして必須の内容しかエスケープされない
+2. DefaultやJavaScriptEncoder.Create()で自作した場合、「<>&'"+」「\`」はUnicodeエスケープされる
+3. 実際のところ、Unicodeエスケープは「Json直接閲覧XSS」の保険対策でしかなく、htmlエスケープとは異なる点に注意
 */

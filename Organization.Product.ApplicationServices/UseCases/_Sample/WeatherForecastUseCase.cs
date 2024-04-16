@@ -25,7 +25,7 @@ namespace Organization.Product.ApplicationServices.UseCases._Sample
                 {
                     Date = DateTime.Now,
                     TemperatureC = requestDto.P2_Int,
-                    Summary = $"{text} {requestDto.P1_Bool} {requestDto.P3_String}",
+                    Summary = $"{text} {requestDto.P1_Bool} <>&'\"+____\\`____あ {requestDto.P3_String}",
                     Double = requestDto.P4_Double
                 }
             };
