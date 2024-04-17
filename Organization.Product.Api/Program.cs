@@ -11,6 +11,11 @@ namespace Organization.Product.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Logging settings
+            builder.Logging
+                .ClearProviders()
+                .AddLog4Net(); // log4net.config
+
             // Add services to the container.
 
             builder.Services.AddControllers()

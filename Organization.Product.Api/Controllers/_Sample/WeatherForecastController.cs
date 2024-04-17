@@ -1,4 +1,4 @@
-using Asp.Versioning;
+﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Organization.Product.ApplicationServices.UseCases._Sample;
 
@@ -23,8 +23,17 @@ namespace Organization.Product.Api.Controllers._Sample
         [MapToApiVersion("0.1")]
         public WeatherForecastResultDto Get_0_1()
         {
+            _logger.LogTrace($"{nameof(this.Get_0_1)} Begin 日本語");
+            _logger.LogDebug($"{nameof(this.Get_0_1)} Begin");
+            _logger.LogInformation($"{nameof(this.Get_0_1)} Begin");
+            _logger.LogWarning($"{nameof(this.Get_0_1)} Begin");
+            _logger.LogError($"{nameof(this.Get_0_1)} Begin");
+            _logger.LogCritical($"{nameof(this.Get_0_1)} Begin");
+
             var usecase = new WeatherForecastUseCase();
             var result = usecase.GetWeatherForecastForNext5Days();
+
+            _logger.LogInformation($"{nameof(this.Get_0_1)} End");
             return result;
         }
 
