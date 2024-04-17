@@ -2,6 +2,7 @@
 
 namespace Organization.Product.ApplicationServices.UseCases._Sample
 {
+    [Aop.Log]
     public class WeatherForecastUseCase
     {
         public WeatherForecastResultDto GetWeatherForecastForNext5Days()
@@ -30,6 +31,11 @@ namespace Organization.Product.ApplicationServices.UseCases._Sample
                 }
             };
             return new WeatherForecastResultDto() { WeatherForecasts = data };
+        }
+
+        public WeatherForecastResultDto ThrowException()
+        {
+            throw new Exception("BOOOO!!");
         }
     }
 }

@@ -1,7 +1,9 @@
 using Organization.Product.Api.Middleware.ApiExplorer;
 using Organization.Product.Api.Middleware.CorsPolicy;
 using Organization.Product.Api.Middleware.JsonSerializerOptions;
+using Organization.Product.Api.Middleware.Log4Net;
 using Organization.Product.Api.Middleware.Swashbuckle;
+using Organization.Product.ApplicationServices.Aop;
 
 namespace Organization.Product.Api
 {
@@ -14,7 +16,7 @@ namespace Organization.Product.Api
             // Logging settings
             builder.Logging
                 .ClearProviders()
-                .AddLog4Net(); // log4net.config
+                .AddLog4Net(new Log4NetProviderOptions { LoggingEventFactory = new CustomLoggingEventFactory("Organization.Product.Api", "Aop") }); // log4net.config
 
             // Add services to the container.
 
@@ -28,6 +30,10 @@ namespace Organization.Product.Api
             builder.Services.AddCors(options => { options.MyAddCorsPolicies(builder.Configuration); });
 
             var app = builder.Build();
+
+            // Initialize LogAttribute
+            var defaultLogger = app.Logger;
+            LogAttribute.SetLogger(defaultLogger);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

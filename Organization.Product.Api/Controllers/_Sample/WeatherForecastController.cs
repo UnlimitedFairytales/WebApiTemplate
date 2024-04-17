@@ -4,6 +4,7 @@ using Organization.Product.ApplicationServices.UseCases._Sample;
 
 namespace Organization.Product.Api.Controllers._Sample
 {
+    [ApplicationServices.Aop.Log]
     [ApiController]
     [ApiVersion("0.1")]
     [ApiVersion("0.2")]
@@ -37,6 +38,15 @@ namespace Organization.Product.Api.Controllers._Sample
             return result;
         }
 
+        [HttpGet()]
+        [MapToApiVersion("0.2")]
+        public WeatherForecastResultDto Get_0_2()
+        {
+            var usecase = new WeatherForecastUseCase();
+            var result = usecase.ThrowException();
+            return result;
+        }
+
         [HttpPost()]
         [MapToApiVersion("0.2")]
         public JsonResult Post_0_2(WeatherForecastRequestDto requestDto)
@@ -55,7 +65,6 @@ namespace Organization.Product.Api.Controllers._Sample
             var result = usecase.Parrot(requestDto, false);
             return result;
         }
-
 
         [HttpPost()]
         [MapToApiVersion("1.0")]
