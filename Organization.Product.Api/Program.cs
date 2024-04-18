@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Organization.Product.Api.Middleware.ApiExplorer;
 using Organization.Product.Api.Middleware.CorsPolicy;
 using Organization.Product.Api.Middleware.JsonSerializerOptions;
@@ -36,6 +37,14 @@ namespace Organization.Product.Api
             LogAttribute.SetLogger(defaultLogger);
 
             // Configure the HTTP request pipeline.
+            var fhOption = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+                ForwardLimit = 1,
+            };
+            fhOption.KnownProxies.Add(System.Net.IPAddress.Parse("192.168.3.249"));
+            app.UseForwardedHeaders(fhOption);
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -144,4 +153,31 @@ ________________________________________________________________________________
 1. nullまたはUnsafeRelaxedJsonEscapingを指定した場合はJSONとして必須の内容しかエスケープされない
 2. DefaultやJavaScriptEncoder.Create()で自作した場合、「<>&'"+」「\`」はUnicodeエスケープされる
 3. 実際のところ、Unicodeエスケープは「Json直接閲覧XSS」の保険対策でしかなく、htmlエスケープとは異なる点に注意
+
+________________________________________________________________________________
+# 6. X-Forwarded-ForとForwardedHeadersOptions
+________________________________________________________________________________
+https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/X-Forwarded-For
+
+ALB/リバースプロキシなどのポップ段数と設定補足
+
+- ForwardLimitとKnownProxiesは偽装値の読み取りを防ぐためパラメータ
+- 1段だけの場合、X-Forwarded-Forの右端の値がクライアントIPである
+    - ForwardLimitやKnownProxiesはデフォルトでよく、省略可能
+- 2段以上の場合、X-Forwarded-For偽装を考慮する必要がある
+    - ForwardLimitやKnownProxiesの設定が必須
+    - ForwardLimit : 最大段数。右から数えてこの段数までしか考慮しない（それより左は偽装されたと見なす）
+    - KnownProxies : ALB/リバースプロキシのIP群。右から順に探しこれら以外のIPをクライアントと見なす
+- 上記の結果はRemoteIpAddressから読み取れる
+
+ForwardLimitとKnownProxiesの動作確認例
+
+```curl
+curl -X 'GET' 'https://localhost:7293/v0.1/WeatherForecast' -H 'accept: text/plain' -H 'X-Forwarded-For:192.168.3.247,192.168.3.248,192.168.3.249'
+```
+
+X-Forwarded-Proto
+
+- 対応結果はRequest.Schemeから読み取れる
+
 */

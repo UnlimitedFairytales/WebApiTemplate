@@ -26,7 +26,7 @@ namespace Organization.Product.Api.Controllers._Sample
         {
             _logger.LogTrace($"{nameof(this.Get_0_1)} Begin 日本語");
             _logger.LogDebug($"{nameof(this.Get_0_1)} Begin");
-            _logger.LogInformation($"{nameof(this.Get_0_1)} Begin");
+            _logger.LogInformation($"{nameof(this.Get_0_1)} Begin {this.ControllerContext.HttpContext.Connection.RemoteIpAddress}");
             _logger.LogWarning($"{nameof(this.Get_0_1)} Begin");
             _logger.LogError($"{nameof(this.Get_0_1)} Begin");
             _logger.LogCritical($"{nameof(this.Get_0_1)} Begin");
