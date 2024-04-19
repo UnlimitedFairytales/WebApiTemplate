@@ -1,4 +1,5 @@
 ﻿using Organization.Product.Domain.Entities._Sample;
+using Organization.Product.Domain.ValueObjects;
 
 namespace Organization.Product.ApplicationServices.UseCases._Sample
 {
@@ -36,6 +37,13 @@ namespace Organization.Product.ApplicationServices.UseCases._Sample
         public WeatherForecastResultDto ThrowException()
         {
             throw new Exception("BOOOO!!");
+        }
+
+        public WeatherForecastResultDto ThrowAppException()
+        {
+            var param = new[] { "TextParam0" };
+            var error = AppMessage.W3003(param);
+            throw AppException.Create(error);
         }
     }
 }

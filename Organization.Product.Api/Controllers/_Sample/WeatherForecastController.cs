@@ -40,7 +40,7 @@ namespace Organization.Product.Api.Controllers._Sample
 
         [HttpGet()]
         [MapToApiVersion("0.2")]
-        public WeatherForecastResultDto Get_0_2()
+        public WeatherForecastResultDto Get_0_2([FromQuery] WeatherForecastRequestDto _)
         {
             var usecase = new WeatherForecastUseCase();
             var result = usecase.ThrowException();
@@ -55,6 +55,15 @@ namespace Organization.Product.Api.Controllers._Sample
             var result = usecase.Parrot(requestDto, true);
             // Return result with new JsonSerializerOptions() (null properties exists)
             return new JsonResult(result, new System.Text.Json.JsonSerializerOptions());
+        }
+
+        [HttpPut]
+        [MapToApiVersion("0.2")]
+        public WeatherForecastResultDto Put_0_2(WeatherForecastRequestDto _)
+        {
+            var usecase = new WeatherForecastUseCase();
+            var result = usecase.ThrowAppException();
+            return result;
         }
 
         [HttpGet()]

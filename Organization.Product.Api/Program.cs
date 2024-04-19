@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.HttpOverrides;
+using Organization.Product.Api.Filters;
 using Organization.Product.Api.Middleware.ApiExplorer;
 using Organization.Product.Api.Middleware.CorsPolicy;
 using Organization.Product.Api.Middleware.JsonSerializerOptions;
@@ -20,9 +21,13 @@ namespace Organization.Product.Api
                 .AddLog4Net(new Log4NetProviderOptions { LoggingEventFactory = new CustomLoggingEventFactory("Organization.Product.Api", "Aop") }); // log4net.config
 
             // Add services to the container.
-
-            builder.Services.AddControllers()
-                .MyAddJsonOptions(builder.Configuration);
+            builder.Services.AddTransient<BindModelCacheFilter>();
+            builder.Services.AddTransient<ExceptionHandlingFilter>();
+            builder.Services.AddControllers(configure =>
+            {
+                configure.Filters.Add<BindModelCacheFilter>();
+                configure.Filters.Add<ExceptionHandlingFilter>();
+            }).MyAddJsonOptions(builder.Configuration);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             // builder.Services.AddEndpointsApiExplorer();
             // builder.Services.AddSwaggerGen();

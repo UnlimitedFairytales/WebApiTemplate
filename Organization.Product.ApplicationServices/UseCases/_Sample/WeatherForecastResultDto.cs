@@ -2,7 +2,7 @@
 
 namespace Organization.Product.ApplicationServices.UseCases._Sample
 {
-    public class WeatherForecastResultDto
+    public class WeatherForecastResultDto : BaseResultDto
     {
         public IEnumerable<WeatherForecast>? WeatherForecasts { get; set; }
         public string? NullPropertySample { get; set; }
