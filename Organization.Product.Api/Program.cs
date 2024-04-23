@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Organization.Product.Api.Filters;
 using Organization.Product.Api.Middleware.ApiExplorer;
+using Organization.Product.Api.Middleware.Auth;
 using Organization.Product.Api.Middleware.CorsPolicy;
 using Organization.Product.Api.Middleware.JsonSerializerOptions;
 using Organization.Product.Api.Middleware.Log4Net;
@@ -28,6 +30,13 @@ namespace Organization.Product.Api
                 configure.Filters.Add<BindModelCacheFilter>();
                 configure.Filters.Add<ExceptionHandlingFilter>();
             }).MyAddJsonOptions(builder.Configuration);
+            builder.Services.MyAddAuthentication(builder.Configuration);
+            builder.Services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             // builder.Services.AddEndpointsApiExplorer();
             // builder.Services.AddSwaggerGen();
@@ -63,6 +72,7 @@ namespace Organization.Product.Api
 
             app.MyUseCorsPolicies(builder.Configuration);
 
+            app.MyUseAuthentication(builder.Configuration);
             app.UseAuthorization();
 
 
@@ -186,5 +196,58 @@ curl -X 'GET' 'https://localhost:7293/v0.1/WeatherForecast' -H 'accept: text/pla
 X-Forwarded-Proto
 
 - 対応結果はRequest.Schemeから読み取れる
+
+________________________________________________________________________________
+# 7. ASP.NET Core 認証関連
+________________________________________________________________________________
+https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/?view=aspnetcore-8.0
+
+全体の流れ
+
+1. あるアクションに到達しようとした時、認証や認可が必要か。必要な場合、どの認証(認証スキーム名)が必要か
+2. 要求された認証スキームに対応する認証ハンドラを取得して、Initialize、Authenticate、Challenge、Forbidを実施
+    - Authenticate : 認証済かどうかを判断する処理
+    - Challenge : 「未認証」の場合に、認証フローを開始する処理。OAuthを開始したり、ログインページを表示するなど
+    - Forbid : 「認証済」だが「不認可」の場合の処理。403を返したり、403ページを表示するなど
+3. ASP.NET Core標準の認証スキームを利用する場合、HttpContext.UserでClaimsPrincipalを取得可能
+
+概念
+
+概念や用語          |概要
+--------------------|----------------------------------------------------------------------------------------------
+認証サービス        |IAuthenticationService。認証ハンドラの決定、nullのときの調整などを行う薄い層。通常は標準を使用
+認証ハンドラ        |IAuthenticationHandler。実際の認証ロジック。Initialize、Authenticate、Challenge、Forbid
+認証スキーム        |DIに登録された認証ハンドラや構成オプションの1セットこと
+認可ポリシー        |アプリケーション全体または認証スキームレベルで共通に設定するための認可設定
+認可属性            |ControllerやActionに個別に設定するための認可設定。Authorize、AllowAnonymous
+既定の認証スキーム名|AddAuthentication()時に指定可能な値。複数の認証スキームを登録した場合は明示的な指定が実質必須
+IPrincipal          |認証成功時に返却されるDto。ASP.NET Core標準の認証スキーマはすべてClaimsPrincipalにダウンキャスト可能
+クレームセット      |認証成功後、HttpContext.User.Identityで取得可能
+マルチテナント認証  |ASP.NET Coreの標準ライブラリでは非対応
+AddScheme           |認証スキームを登録するためのメソッド。ほとんどの場合各ヘルパで登録するため、これを直接使用することはあまりない
+AddCookie           |AddSchemeヘルパ（Cookie認証）。ステートレス
+AddJwtBearer        |AddSchemeヘルパ（JWT Bearer認証）。ステートレス
+AddNegotiate        |AddSchemeヘルパ（Windows認証）
+AddOAuth            |AddSchemeヘルパ（汎用的なOAuth2）
+AddFacebook         |AddSchemeヘルパ（Facebook向けOAuth2）
+AddGoogle           |AddSchemeヘルパ（Google向けOAuth2）
+AddTwitter          |AddSchemeヘルパ（Twitter向けのOAuth2）
+
+-
+
+ALBによるOAuthの場合
+
+- ALBがOAuthを肩代わりする場合、アプリケーション側はOAuthする必要がない
+    - ALBに限らず、リバースプロキシ全般に言える
+- 代わりに、X-Amzn-Oidc-Dataで渡されてくるJWTに基づいて認証済みか判断が必要
+- AddJwtBearerのオプションを調整すれば対応可能
+
+________________________________________________________________________________
+# 8. ASP.NET Core 認可関連
+________________________________________________________________________________
+DefaultPolicyとFallbackPolicy
+
+- DefaultPolicyは、Authorize属性が指定されたが、Policyが指定されなった時のポリシー
+- FallbackPolicyは、属性が何も指定されていない時のポリシー
 
 */
