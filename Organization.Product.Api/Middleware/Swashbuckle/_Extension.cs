@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning.ApiExplorer;
 using Microsoft.Extensions.Options;
+using Organization.Product.Api.Middleware.Auth;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api.Middleware.Swashbuckle
@@ -10,12 +11,13 @@ namespace Organization.Product.Api.Middleware.Swashbuckle
     {
         // https://github.com/dotnet/aspnet-api-versioning
         // https://github.com/dotnet/aspnet-api-versioning/blob/release/6.0/examples/AspNetCore/WebApi/OpenApiExample/
-        public static void MyAddTransient_AddSwaggerGen(this IServiceCollection services)
+        public static void MyAddTransient_AddSwaggerGen(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSwaggerGen(options =>
             {
                 options.OperationFilter<SwaggerDefaultValues>();
+                options.MyAddSecurityDefinition_AddSecurityRequirement(configuration);
             });
         }
 

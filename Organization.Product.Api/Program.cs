@@ -41,7 +41,7 @@ namespace Organization.Product.Api
             // builder.Services.AddEndpointsApiExplorer();
             // builder.Services.AddSwaggerGen();
             builder.Services.MyAddApiVersioning_AddVersionedApiExplorer(builder.Configuration);
-            builder.Services.MyAddTransient_AddSwaggerGen();
+            builder.Services.MyAddTransient_AddSwaggerGen(builder.Configuration);
             builder.Services.AddCors(options => { options.MyAddCorsPolicies(builder.Configuration); });
 
             builder.Services.AddApplicationServices();

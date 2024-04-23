@@ -1,4 +1,5 @@
 ﻿using Organization.Product.Domain.ValueObjects.Configurations;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api.Middleware.Auth
 {
@@ -18,6 +19,12 @@ namespace Organization.Product.Api.Middleware.Auth
         {
             var authMethods = GetAuthMethods(configuration);
             authMethods.AddAuthentication(services, configuration);
+        }
+
+        public static void MyAddSecurityDefinition_AddSecurityRequirement(this SwaggerGenOptions options, IConfiguration configuration)
+        {
+            var authMethods = GetAuthMethods(configuration);
+            authMethods.AddSecurityDefinition_AddSecurityRequirement(options);
         }
 
         public static void MyUseAuthentication(this WebApplication app, IConfiguration configuration)

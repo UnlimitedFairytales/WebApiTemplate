@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Organization.Product.Domain.ValueObjects.Configurations;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
 namespace Organization.Product.Api.Middleware.Auth
@@ -24,6 +26,35 @@ namespace Organization.Product.Api.Middleware.Auth
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                     };
+                });
+        }
+
+        public void AddSecurityDefinition_AddSecurityRequirement(SwaggerGenOptions options)
+        {
+            var schemeName = JwtBearerDefaults.AuthenticationScheme;
+            options.AddSecurityDefinition(schemeName, new OpenApiSecurityScheme()
+            {
+                Type = SecuritySchemeType.Http,
+                In = ParameterLocation.Header,
+                Name = "Authorization",
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                Description = "Please input jwt_token"
+            });
+            options.AddSecurityRequirement(
+                new OpenApiSecurityRequirement()
+                {
+                        {
+                            new OpenApiSecurityScheme()
+                            {
+                                Reference = new OpenApiReference()
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = schemeName
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
                 });
         }
 
