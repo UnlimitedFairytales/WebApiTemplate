@@ -35,6 +35,8 @@ namespace Organization.Product.Api
             builder.Services.MyAddTransient_AddSwaggerGen();
             builder.Services.AddCors(options => { options.MyAddCorsPolicies(builder.Configuration); });
 
+            builder.Services.AddApplicationServices();
+
             var app = builder.Build();
 
             // Initialize LogAttribute

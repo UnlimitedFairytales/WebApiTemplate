@@ -13,11 +13,13 @@ namespace Organization.Product.Api.Controllers._Sample
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly WeatherForecastUseCase _useCase;
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(WeatherForecastUseCase useCase, ILogger<WeatherForecastController> logger)
         {
-            _logger = logger;
+            this._useCase = useCase;
+            this._logger = logger;
         }
 
         [HttpGet()]
@@ -31,8 +33,7 @@ namespace Organization.Product.Api.Controllers._Sample
             _logger.LogError($"{nameof(this.Get_0_1)} Begin");
             _logger.LogCritical($"{nameof(this.Get_0_1)} Begin");
 
-            var usecase = new WeatherForecastUseCase();
-            var result = usecase.GetWeatherForecastForNext5Days();
+            var result = this._useCase.GetWeatherForecastForNext5Days();
 
             _logger.LogInformation($"{nameof(this.Get_0_1)} End");
             return result;
@@ -42,46 +43,36 @@ namespace Organization.Product.Api.Controllers._Sample
         [MapToApiVersion("0.2")]
         public WeatherForecastResultDto Get_0_2([FromQuery] WeatherForecastRequestDto _)
         {
-            var usecase = new WeatherForecastUseCase();
-            var result = usecase.ThrowException();
-            return result;
+            return this._useCase.ThrowException();
         }
 
         [HttpPost()]
         [MapToApiVersion("0.2")]
         public JsonResult Post_0_2(WeatherForecastRequestDto requestDto)
         {
-            var usecase = new WeatherForecastUseCase();
-            var result = usecase.Parrot(requestDto, true);
-            // Return result with new JsonSerializerOptions() (null properties exists)
-            return new JsonResult(result, new System.Text.Json.JsonSerializerOptions());
+            var result = this._useCase.Parrot(requestDto, true);
+            return new JsonResult(result, new System.Text.Json.JsonSerializerOptions()); // null properties exists
         }
 
         [HttpPut]
         [MapToApiVersion("0.2")]
         public WeatherForecastResultDto Put_0_2(WeatherForecastRequestDto _)
         {
-            var usecase = new WeatherForecastUseCase();
-            var result = usecase.ThrowAppException();
-            return result;
+            return this._useCase.ThrowAppException();
         }
 
         [HttpGet()]
         [MapToApiVersion("1.0")]
         public WeatherForecastResultDto Get([FromQuery] WeatherForecastRequestDto requestDto)
         {
-            var usecase = new WeatherForecastUseCase();
-            var result = usecase.Parrot(requestDto, false);
-            return result;
+            return this._useCase.Parrot(requestDto, false);
         }
 
         [HttpPost()]
         [MapToApiVersion("1.0")]
         public WeatherForecastResultDto Post(WeatherForecastRequestDto requestDto)
         {
-            var usecase = new WeatherForecastUseCase();
-            var result = usecase.Parrot(requestDto, true);
-            return result;
+            return this._useCase.Parrot(requestDto, true);
         }
     }
 }
