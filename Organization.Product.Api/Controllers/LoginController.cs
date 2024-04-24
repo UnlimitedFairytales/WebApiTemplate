@@ -34,7 +34,7 @@ namespace Organization.Product.Api.Controllers
         [HttpPost]
         public LoginResultDto Login(LoginRequestDto requestDto)
         {
-            return _useCase.Login(requestDto);
+            return _useCase.Login(requestDto, this.HttpContext);
         }
     }
 }

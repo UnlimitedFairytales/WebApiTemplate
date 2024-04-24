@@ -11,6 +11,7 @@ namespace Organization.Product.Api.Middleware.Auth
         {
             var authOptions = AuthOptions.Load(configuration);
             return
+                authOptions.AuthType == AuthOptions.AuthType_IdPasswordCookie ? new IdPasswordCookie() :
                 authOptions.AuthType == AuthOptions.AuthType_IdPasswordJwt ? new IdPasswordJwt() :
                 throw new Exception("invalid config");
         }

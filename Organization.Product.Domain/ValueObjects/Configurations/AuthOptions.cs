@@ -4,6 +4,7 @@ namespace Organization.Product.Domain.ValueObjects.Configurations
 {
     public class AuthOptions
     {
+        public const string AuthType_IdPasswordCookie = "IdPasswordCookie";
         public const string AuthType_IdPasswordJwt = "IdPasswordJwt";
 
         public static AuthOptions Load(IConfiguration configuration)
@@ -14,7 +15,13 @@ namespace Organization.Product.Domain.ValueObjects.Configurations
         }
 
         public string AuthType { get; set; } = String.Empty;
+        public Cookie Cookie { get; set; } = new Cookie();
         public Jwt Jwt { get; set; } = new Jwt();
+    }
+
+    public class Cookie
+    {
+        public int Expire_Minute { get; set; }
     }
 
     public class Jwt

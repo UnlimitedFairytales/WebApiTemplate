@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Organization.Product.Domain.ValueObjects;
 using Organization.Product.Domain.ValueObjects.Configurations;
 
@@ -14,7 +15,7 @@ namespace Organization.Product.ApplicationServices.UseCases.Login
             this._configuration = configuration;
         }
 
-        public LoginResultDto Login(LoginRequestDto requestDto)
+        public LoginResultDto Login(LoginRequestDto requestDto, HttpContext httpContext)
         {
             var isValid = requestDto.UserCd == "USER00" && requestDto.Password == "USER00";
             if (!isValid)
@@ -26,6 +27,8 @@ namespace Organization.Product.ApplicationServices.UseCases.Login
             var authOptions = AuthOptions.Load(this._configuration);
             switch (authOptions.AuthType)
             {
+                case AuthOptions.AuthType_IdPasswordCookie:
+                    return CookieAuthService.SignIn(requestDto, authOptions, httpContext);
                 case AuthOptions.AuthType_IdPasswordJwt:
                     return JwtAuthService.SignIn(requestDto, authOptions);
                 default:
