@@ -36,5 +36,11 @@ namespace Organization.Product.Api.Controllers
         {
             return _useCase.Login(requestDto, this.HttpContext);
         }
+
+        [HttpPost]
+        public LoginResultDto Logout(LoginRequestDto requestDto)
+        {
+            return _useCase.Logout(requestDto, this.HttpContext);
+        }
     }
 }

@@ -46,6 +46,7 @@
         public static AppMessage W5003(string[]? textParam = null) => new(nameof(W5003), textParam, "パスワードが正しくありません。");
         public static AppMessage W5004(string[]? textParam = null) => new(nameof(W5004), textParam, "ログインが許可されていません。");
         public static AppMessage W5005(string[]? textParam = null) => new(nameof(W5005), textParam, "権限がありません。");
+        public static AppMessage W5006(string[]? textParam = null) => new(nameof(W5006), textParam, "これはステートレス認証です。ログアウトは無意味です。");
 
         public static AppMessage W4001(string[]? textParam = null) => new(nameof(W4001), textParam, "セッションタイムアウトしました。お手数ですが、再度ログインしてください。");
         public static AppMessage W4002(string[]? textParam = null) => new(nameof(W4002), textParam, "一定時間（{0}分以上）操作をしなかったため、画面を再読み込みしてください。");
