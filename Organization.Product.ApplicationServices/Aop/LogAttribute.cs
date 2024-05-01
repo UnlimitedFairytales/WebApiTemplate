@@ -13,28 +13,28 @@ namespace Organization.Product.ApplicationServices.Aop
             _logger = logger;
         }
 
-        protected LogLevel LogLevel { get; set; }
-        protected LogLevel ExceptionLogLevel { get; set; }
+        private LogLevel _logLevel;
+        private LogLevel _exceptionLogLevel;
 
         public LogAttribute(LogLevel logLevel = LogLevel.Information, LogLevel exceptionLogLevel = LogLevel.Error)
         {
-            this.LogLevel = logLevel;
-            this.ExceptionLogLevel = exceptionLogLevel;
+            this._logLevel = logLevel;
+            this._exceptionLogLevel = exceptionLogLevel;
         }
 
         public override void OnEntry(MethodExecutionArgs arg)
         {
-            _logger?.Log(this.LogLevel, "{FullName}.{Name} OnEntry", arg.Method.ReflectedType?.FullName, arg.Method.Name);
+            _logger?.Log(this._logLevel, "{FullName}.{Name} OnEntry", arg.Method.ReflectedType?.FullName, arg.Method.Name);
         }
 
         public override void OnExit(MethodExecutionArgs arg)
         {
-            _logger?.Log(this.LogLevel, "{FullName}.{Name} OnExit", arg.Method.ReflectedType?.FullName, arg.Method.Name);
+            _logger?.Log(this._logLevel, "{FullName}.{Name} OnExit", arg.Method.ReflectedType?.FullName, arg.Method.Name);
         }
 
         public override void OnException(MethodExecutionArgs arg)
         {
-            _logger?.Log(this.ExceptionLogLevel, "{FullName}.{Name} OnException", arg.Method.ReflectedType?.FullName, arg.Method.Name);
+            _logger?.Log(this._exceptionLogLevel, "{FullName}.{Name} OnException", arg.Method.ReflectedType?.FullName, arg.Method.Name);
         }
     }
 }

@@ -7,7 +7,7 @@
             return new AppException(error.FormattedText, innerException, error);
         }
 
-        public AppMessage Error { get; protected set; }
+        public AppMessage Error { get; private set; }
 
         private AppException(string message, Exception? innerException, AppMessage error)
             : base(message, innerException)
