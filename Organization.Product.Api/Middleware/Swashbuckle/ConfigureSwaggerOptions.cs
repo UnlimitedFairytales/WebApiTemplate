@@ -7,19 +7,19 @@ namespace Organization.Product.Api.Middleware.Swashbuckle
 {
     class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
-        readonly IApiVersionDescriptionProvider provider;
-        readonly IConfiguration configuration;
+        readonly IApiVersionDescriptionProvider _provider;
+        readonly IConfiguration _configuration;
 
         public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, IConfiguration configuration)
         {
-            this.provider = provider;
-            this.configuration = configuration;
+            this._provider = provider;
+            this._configuration = configuration;
         }
 
         public void Configure(SwaggerGenOptions options)
         {
-            var cnf = configuration.GetSection("SwaggerDoc");
-            foreach (var description in provider.ApiVersionDescriptions)
+            var cnf = this._configuration.GetSection("SwaggerDoc");
+            foreach (var description in this._provider.ApiVersionDescriptions)
             {
                 options.SwaggerDoc(
                     description.GroupName,

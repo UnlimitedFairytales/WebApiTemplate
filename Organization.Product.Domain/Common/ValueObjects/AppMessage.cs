@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Domain.ValueObjects
+﻿namespace Organization.Product.Domain.Common.ValueObjects
 {
     public class AppMessage
     {
@@ -20,7 +20,7 @@
                 string text = "";
                 try
                 {
-                    text = TextParam == null ?
+                    text = this.TextParam == null ?
                         this.TextTemplate :
                         string.Format(this.TextTemplate, this.TextParam);
                 }

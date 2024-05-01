@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Organization.Product.Domain.ValueObjects.Configurations;
+using Organization.Product.Domain.Common.Configurations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -8,8 +8,8 @@ namespace Organization.Product.ApplicationServices.UseCases.Login
 {
     public class JwtAuthService
     {
-        private static readonly DateTime UNIX_EPOCH = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        private static long GetUnixTime(DateTime datetime)
+        static readonly DateTime UNIX_EPOCH = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        static long GetUnixTime(DateTime datetime)
         {
             var span = datetime.ToUniversalTime() - UNIX_EPOCH;
             return (long)span.TotalSeconds;

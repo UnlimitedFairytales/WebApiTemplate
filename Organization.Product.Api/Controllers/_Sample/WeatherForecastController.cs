@@ -13,8 +13,8 @@ namespace Organization.Product.Api.Controllers._Sample
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly WeatherForecastUseCase _useCase;
-        private readonly ILogger<WeatherForecastController> _logger;
+        readonly WeatherForecastUseCase _useCase;
+        readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(WeatherForecastUseCase useCase, ILogger<WeatherForecastController> logger)
         {
@@ -26,16 +26,18 @@ namespace Organization.Product.Api.Controllers._Sample
         [MapToApiVersion("0.1")]
         public WeatherForecastResultDto Get_0_1()
         {
-            _logger.LogTrace($"{nameof(this.Get_0_1)} Begin 日本語");
-            _logger.LogDebug($"{nameof(this.Get_0_1)} Begin");
-            _logger.LogInformation($"{nameof(this.Get_0_1)} Begin {this.ControllerContext.HttpContext.Connection.RemoteIpAddress}");
-            _logger.LogWarning($"{nameof(this.Get_0_1)} Begin");
-            _logger.LogError($"{nameof(this.Get_0_1)} Begin");
-            _logger.LogCritical($"{nameof(this.Get_0_1)} Begin");
+            this._logger.LogTrace($"{nameof(this.Get_0_1)} Begin 日本語");
+            this._logger.LogDebug($"{nameof(this.Get_0_1)} Begin");
+#pragma warning disable CA2254 // テンプレートは静的な式にする必要があります
+            this._logger.LogInformation($"{nameof(this.Get_0_1)} Begin {this.ControllerContext.HttpContext.Connection.RemoteIpAddress}");
+#pragma warning restore CA2254 // テンプレートは静的な式にする必要があります
+            this._logger.LogWarning($"{nameof(this.Get_0_1)} Begin");
+            this._logger.LogError($"{nameof(this.Get_0_1)} Begin");
+            this._logger.LogCritical($"{nameof(this.Get_0_1)} Begin");
 
             var result = this._useCase.GetWeatherForecastForNext5Days();
 
-            _logger.LogInformation($"{nameof(this.Get_0_1)} End");
+            this._logger.LogInformation($"{nameof(this.Get_0_1)} End");
             return result;
         }
 

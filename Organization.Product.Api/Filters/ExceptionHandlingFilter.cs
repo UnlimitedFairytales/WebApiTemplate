@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Organization.Product.ApplicationServices;
-using Organization.Product.Domain.ValueObjects;
+using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.Api.Filters
 {
     public class ExceptionHandlingFilter : IExceptionFilter
     {
-        private readonly ILogger<ExceptionHandlingFilter> _logger;
+        readonly ILogger<ExceptionHandlingFilter> _logger;
 
         public ExceptionHandlingFilter(ILogger<ExceptionHandlingFilter> logger)
         {
-            _logger = logger;
+            this._logger = logger;
         }
 
         public void OnException(ExceptionContext context)
@@ -38,7 +38,7 @@ namespace Organization.Product.Api.Filters
                 catch
                 {
                 }
-                _logger.LogError(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
+                this._logger.LogError(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
 
                 var errDto = new BaseResultDto() { Error = err };
                 context.Result = new JsonResult(errDto);

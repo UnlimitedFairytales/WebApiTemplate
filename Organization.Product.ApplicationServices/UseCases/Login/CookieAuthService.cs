@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using Organization.Product.Domain.ValueObjects.Configurations;
+using Organization.Product.Domain.Common.Configurations;
 using System.Security.Claims;
 
 namespace Organization.Product.ApplicationServices.UseCases.Login

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
-using Organization.Product.Domain.ValueObjects.Configurations;
+using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api.Middleware.Auth

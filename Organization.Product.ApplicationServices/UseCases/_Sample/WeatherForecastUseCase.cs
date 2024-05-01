@@ -1,8 +1,9 @@
-﻿using Organization.Product.Domain.Entities._Sample;
-using Organization.Product.Domain.ValueObjects;
+﻿using Organization.Product.Domain._Sample.Entities;
+using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.ApplicationServices.UseCases._Sample
 {
+#pragma warning disable CA1822 // メンバーを static に設定します
     [Aop.Log]
     public class WeatherForecastUseCase
     {

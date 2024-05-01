@@ -1,4 +1,4 @@
-﻿using Organization.Product.Domain.Entities._Sample;
+﻿using Organization.Product.Domain._Sample.Entities;
 
 namespace Organization.Product.ApplicationServices.UseCases._Sample
 {

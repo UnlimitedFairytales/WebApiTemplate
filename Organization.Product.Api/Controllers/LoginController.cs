@@ -11,7 +11,7 @@ namespace Organization.Product.Api.Controllers
     [Route("[controller]/[action]")]
     public class LoginController : ControllerBase
     {
-        private readonly LoginUseCase _useCase;
+        readonly LoginUseCase _useCase;
 
         public LoginController(LoginUseCase useCase)
         {
@@ -34,13 +34,13 @@ namespace Organization.Product.Api.Controllers
         [HttpPost]
         public LoginResultDto Login(LoginRequestDto requestDto)
         {
-            return _useCase.Login(requestDto, this.HttpContext);
+            return this._useCase.Login(requestDto, this.HttpContext);
         }
 
         [HttpPost]
         public LoginResultDto Logout(LoginRequestDto requestDto)
         {
-            return _useCase.Logout(requestDto, this.HttpContext);
+            return this._useCase.Logout(requestDto, this.HttpContext);
         }
     }
 }

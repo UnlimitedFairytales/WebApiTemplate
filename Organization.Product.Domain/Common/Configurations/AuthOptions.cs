@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Organization.Product.Domain.ValueObjects.Configurations
+namespace Organization.Product.Domain.Common.Configurations
 {
     public class AuthOptions
     {
@@ -14,7 +14,11 @@ namespace Organization.Product.Domain.ValueObjects.Configurations
             return obj;
         }
 
-        public string AuthType { get; set; } = String.Empty;
+        // static
+        // ----------------------------------------
+        // instance
+
+        public string AuthType { get; set; } = string.Empty;
         public Cookie Cookie { get; set; } = new Cookie();
         public Jwt Jwt { get; set; } = new Jwt();
     }
@@ -26,9 +30,9 @@ namespace Organization.Product.Domain.ValueObjects.Configurations
 
     public class Jwt
     {
-        public string Issuer { get; set; } = String.Empty;
-        public string Audience { get; set; } = String.Empty;
-        public string IssuerSigningKey { get; set; } = String.Empty;
+        public string Issuer { get; set; } = string.Empty;
+        public string Audience { get; set; } = string.Empty;
+        public string IssuerSigningKey { get; set; } = string.Empty;
         public int Expire_Minute { get; set; }
     }
 }

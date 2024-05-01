@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Organization.Product.Domain.ValueObjects;
-using Organization.Product.Domain.ValueObjects.Configurations;
+using Organization.Product.Domain.Common.Configurations;
+using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.ApplicationServices.UseCases.Login
 {
     [Aop.Log]
     public class LoginUseCase
     {
-        private readonly IConfiguration _configuration;
+        readonly IConfiguration _configuration;
 
         public LoginUseCase(IConfiguration configuration)
         {

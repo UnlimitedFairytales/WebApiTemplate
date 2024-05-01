@@ -1,4 +1,4 @@
-﻿using Organization.Product.Domain.ValueObjects.Configurations;
+﻿using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api.Middleware.Auth
@@ -7,7 +7,7 @@ namespace Organization.Product.Api.Middleware.Auth
     static class _Extension
 #pragma warning restore IDE1006
     {
-        private static IAuthMethods GetAuthMethods(IConfiguration configuration)
+        static IAuthMethods GetAuthMethods(IConfiguration configuration)
         {
             var authOptions = AuthOptions.Load(configuration);
             return

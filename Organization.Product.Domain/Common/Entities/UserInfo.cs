@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Domain.Entities
+﻿namespace Organization.Product.Domain.Common.Entities
 {
     public class UserInfo
     {

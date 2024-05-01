@@ -1,4 +1,4 @@
-namespace Organization.Product.Domain.Entities._Sample
+namespace Organization.Product.Domain._Sample.Entities
 {
     public class WeatherForecast
     {
@@ -7,11 +7,15 @@ namespace Organization.Product.Domain.Entities._Sample
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        // static
+        // ----------------------------------------
+        // instance
+
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public int TemperatureF => 32 + (int)(this.TemperatureC / 0.5556);
 
         public string? Summary { get; set; }
 

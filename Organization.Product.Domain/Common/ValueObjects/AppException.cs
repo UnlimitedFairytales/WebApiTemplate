@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Domain.ValueObjects
+﻿namespace Organization.Product.Domain.Common.ValueObjects
 {
     public class AppException : Exception
     {
@@ -6,6 +6,10 @@
         {
             return new AppException(error.FormattedText, innerException, error);
         }
+
+        // static
+        // ----------------------------------------
+        // instance
 
         public AppMessage Error { get; private set; }
 
