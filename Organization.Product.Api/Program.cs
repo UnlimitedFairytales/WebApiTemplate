@@ -43,8 +43,9 @@ namespace Organization.Product.Api
             builder.Services.MyAddApiVersioning_AddVersionedApiExplorer(builder.Configuration);
             builder.Services.MyAddTransient_AddSwaggerGen(builder.Configuration);
             builder.Services.AddCors(options => { options.MyAddCorsPolicies(builder.Configuration); });
+            builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
-            builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices(builder.Configuration);
 
             var app = builder.Build();
 

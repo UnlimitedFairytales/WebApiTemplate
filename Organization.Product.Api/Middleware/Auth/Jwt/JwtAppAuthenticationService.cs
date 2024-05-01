@@ -1,12 +1,15 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Organization.Product.Domain.Authentications.Services;
+using Organization.Product.Domain.Authentications.ValueObjects;
 using Organization.Product.Domain.Common.Configurations;
+using Organization.Product.Domain.Common.ValueObjects;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Organization.Product.ApplicationServices.UseCases.Login
+namespace Organization.Product.Api.Middleware.Auth.Jwt
 {
-    public class JwtAuthService
+    public class JwtAppAuthenticationService : IAppAuthenticationService
     {
         static readonly DateTime UNIX_EPOCH = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         static long GetUnixTime(DateTime datetime)
@@ -15,20 +18,7 @@ namespace Organization.Product.ApplicationServices.UseCases.Login
             return (long)span.TotalSeconds;
         }
 
-        public static LoginResultDto SignIn(LoginRequestDto requestDto, AuthOptions authOptions)
-        {
-            var token = GenerateToken(
-                authOptions.Jwt.Issuer,
-                authOptions.Jwt.Audience,
-                requestDto.UserCd!,
-                DateTime.UtcNow,
-                Guid.NewGuid().ToString("N"),
-                authOptions.Jwt.Expire_Minute,
-                authOptions.Jwt.IssuerSigningKey);
-            return new LoginResultDto() { Token = token };
-        }
-
-        public static string GenerateToken(
+        static string GenerateToken(
             string issuer,
             string audience,
             string subject,
@@ -55,6 +45,35 @@ namespace Organization.Product.ApplicationServices.UseCases.Login
                 signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        // static
+        // ----------------------------------------
+        // instance
+
+        readonly AuthOptions _authOptions;
+
+        public JwtAppAuthenticationService(AuthOptions authOptions)
+        {
+            this._authOptions = authOptions;
+        }
+
+        public AppAuthenticationResult Authenticate(string userCd, string? password)
+        {
+            var token = GenerateToken(
+                this._authOptions.Jwt.Issuer,
+                this._authOptions.Jwt.Audience,
+                userCd,
+                DateTime.UtcNow,
+                Guid.NewGuid().ToString("N"),
+                this._authOptions.Jwt.Expire_Minute,
+                this._authOptions.Jwt.IssuerSigningKey);
+            return new AppAuthenticationResult { Token = token };
+        }
+
+        public void SignOut()
+        {
+            throw AppException.Create(AppMessage.W5006());
         }
     }
 }

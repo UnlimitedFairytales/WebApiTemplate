@@ -34,13 +34,13 @@ namespace Organization.Product.Api.Controllers
         [HttpPost]
         public LoginResultDto Login(LoginRequestDto requestDto)
         {
-            return this._useCase.Login(requestDto, this.HttpContext);
+            return this._useCase.Login(requestDto);
         }
 
         [HttpPost]
-        public LoginResultDto Logout(LoginRequestDto requestDto)
+        public LoginResultDto Logout(LoginRequestDto _)
         {
-            return this._useCase.Logout(requestDto, this.HttpContext);
+            return this._useCase.Logout();
         }
     }
 }

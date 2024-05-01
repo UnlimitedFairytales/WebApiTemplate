@@ -7,13 +7,6 @@ namespace Organization.Product.Domain.Common.Configurations
         public const string AuthType_IdPasswordCookie = "IdPasswordCookie";
         public const string AuthType_IdPasswordJwt = "IdPasswordJwt";
 
-        public static AuthOptions Load(IConfiguration configuration)
-        {
-            var obj = new AuthOptions();
-            configuration.GetSection("Auth").Bind(obj);
-            return obj;
-        }
-
         // static
         // ----------------------------------------
         // instance
@@ -21,6 +14,11 @@ namespace Organization.Product.Domain.Common.Configurations
         public string AuthType { get; set; } = string.Empty;
         public Cookie Cookie { get; set; } = new Cookie();
         public Jwt Jwt { get; set; } = new Jwt();
+
+        public AuthOptions(IConfiguration configuration)
+        {
+            configuration.GetSection("Auth").Bind(this);
+        }
     }
 
     public class Cookie

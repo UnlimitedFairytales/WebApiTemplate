@@ -5,13 +5,13 @@ using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
-namespace Organization.Product.Api.Middleware.Auth
+namespace Organization.Product.Api.Middleware.Auth.Jwt
 {
     public class IdPasswordJwt : IAuthMethods
     {
         public void AddAuthentication(IServiceCollection services, IConfiguration configuration)
         {
-            var authOptions = AuthOptions.Load(configuration);
+            var authOptions = new AuthOptions(configuration);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {

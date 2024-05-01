@@ -3,13 +3,13 @@ using Microsoft.OpenApi.Models;
 using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Organization.Product.Api.Middleware.Auth
+namespace Organization.Product.Api.Middleware.Auth.Cookie
 {
     public class IdPasswordCookie : IAuthMethods
     {
         public void AddAuthentication(IServiceCollection services, IConfiguration configuration)
         {
-            var authOptions = AuthOptions.Load(configuration);
+            var authOptions = new AuthOptions(configuration);
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

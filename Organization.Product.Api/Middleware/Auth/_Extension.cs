@@ -1,4 +1,6 @@
-﻿using Organization.Product.Domain.Common.Configurations;
+﻿using Organization.Product.Api.Middleware.Auth.Jwt;
+using Organization.Product.Api.Middleware.Auth.Cookie;
+using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api.Middleware.Auth
@@ -9,7 +11,7 @@ namespace Organization.Product.Api.Middleware.Auth
     {
         static IAuthMethods GetAuthMethods(IConfiguration configuration)
         {
-            var authOptions = AuthOptions.Load(configuration);
+            var authOptions = new AuthOptions(configuration);
             return
                 authOptions.AuthType == AuthOptions.AuthType_IdPasswordCookie ? new IdPasswordCookie() :
                 authOptions.AuthType == AuthOptions.AuthType_IdPasswordJwt ? new IdPasswordJwt() :
