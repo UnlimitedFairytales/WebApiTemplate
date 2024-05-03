@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Organization.Product.Api.Middleware.JsonSerializerOptions
 {
 #pragma warning disable IDE1006
-    static class _Extension
+    public static class _Extension
 #pragma warning restore IDE1006
     {
         // https://learn.microsoft.com/ja-jp/aspnet/core/web-api/advanced/formatting?view=aspnetcore-6.0

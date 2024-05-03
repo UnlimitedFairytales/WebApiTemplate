@@ -4,7 +4,7 @@ using Organization.Product.Api.Extensions;
 namespace Organization.Product.Api.Middleware.CorsPolicy
 {
 #pragma warning disable IDE1006
-    static class _Extension
+    public static class _Extension
 #pragma warning restore IDE1006
     {
         public static void MyAddCorsPolicies(this CorsOptions options, IConfiguration configuration)

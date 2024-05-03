@@ -3,7 +3,7 @@
 namespace Organization.Product.Api.Middleware.ApiExplorer
 {
 #pragma warning disable IDE1006
-    static class _Extension
+    public static class _Extension
 #pragma warning restore IDE1006
     {
         // https://github.com/dotnet/aspnet-api-versioning

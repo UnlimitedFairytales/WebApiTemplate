@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Organization.Product.Api.Middleware.Swashbuckle
 {
-    class SwaggerDefaultValues : IOperationFilter
+    public class SwaggerDefaultValues : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
