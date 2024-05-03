@@ -6,6 +6,7 @@ namespace Organization.Product.Domain.Common.Configurations
     {
         public const string AuthType_IdPasswordCookie = "IdPasswordCookie";
         public const string AuthType_IdPasswordJwt = "IdPasswordJwt";
+        public const string AuthType_IdPasswordSession = "IdPasswordSession";
 
         // static
         // ----------------------------------------
@@ -14,6 +15,7 @@ namespace Organization.Product.Domain.Common.Configurations
         public string AuthType { get; set; } = string.Empty;
         public Cookie Cookie { get; set; } = new Cookie();
         public Jwt Jwt { get; set; } = new Jwt();
+        public Session Session { get; set; } = new Session();
 
         public AuthOptions(IConfiguration configuration)
         {
@@ -32,5 +34,10 @@ namespace Organization.Product.Domain.Common.Configurations
         public string Audience { get; set; } = string.Empty;
         public string IssuerSigningKey { get; set; } = string.Empty;
         public int Expire_Minute { get; set; }
+    }
+
+    public class Session
+    {
+        public int IdleTimeout_Minute { get; set; }
     }
 }

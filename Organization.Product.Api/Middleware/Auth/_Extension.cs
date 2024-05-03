@@ -1,5 +1,6 @@
-﻿using Organization.Product.Api.Middleware.Auth.Jwt;
-using Organization.Product.Api.Middleware.Auth.Cookie;
+﻿using Organization.Product.Api.Middleware.Auth.Cookie;
+using Organization.Product.Api.Middleware.Auth.Jwt;
+using Organization.Product.Api.Middleware.Auth.Session;
 using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -15,6 +16,7 @@ namespace Organization.Product.Api.Middleware.Auth
             return
                 authOptions.AuthType == AuthOptions.AuthType_IdPasswordCookie ? new IdPasswordCookie() :
                 authOptions.AuthType == AuthOptions.AuthType_IdPasswordJwt ? new IdPasswordJwt() :
+                authOptions.AuthType == AuthOptions.AuthType_IdPasswordSession ? new IdPasswordSession() :
                 throw new Exception("invalid config");
         }
 

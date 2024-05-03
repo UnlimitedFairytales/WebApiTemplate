@@ -251,4 +251,15 @@ DefaultPolicyとFallbackPolicy
 - DefaultPolicyは、Authorize属性が指定されたが、Policyが指定されなった時のポリシー
 - FallbackPolicyは、属性が何も指定されていない時のポリシー
 
+________________________________________________________________________________
+# 9. Sessionについて
+________________________________________________________________________________
+.NET Core のSession
+
+- SessionKeyの破棄・再作成をサポートしていない
+- Cookie側とSession側の両方にTokenを保持し比較することでステートフルにする
+    - SignIn  : トークンを発行し、CookieとSessionに保存
+    - 検証    : CookieとSessionのトークンを比較
+    - SignOut : Sessionをクリア
+
 */

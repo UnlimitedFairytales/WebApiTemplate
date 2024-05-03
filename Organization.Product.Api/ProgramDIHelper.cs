@@ -1,5 +1,6 @@
 ﻿using Organization.Product.Api.Middleware.Auth.Cookie;
 using Organization.Product.Api.Middleware.Auth.Jwt;
+using Organization.Product.Api.Middleware.Auth.Session;
 using Organization.Product.ApplicationServices.UseCases._Sample;
 using Organization.Product.ApplicationServices.UseCases.Login;
 using Organization.Product.Domain.Authentications.Services;
@@ -20,6 +21,9 @@ namespace Organization.Product.Api
                     break;
                 case AuthOptions.AuthType_IdPasswordJwt:
                     services.AddTransient<IAppAuthenticationService, JwtAppAuthenticationService>();
+                    break;
+                case AuthOptions.AuthType_IdPasswordSession:
+                    services.AddTransient<IAppAuthenticationService, SessionAppAuthenticationService>();
                     break;
                 default:
                     break;
