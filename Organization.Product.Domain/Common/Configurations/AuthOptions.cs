@@ -38,6 +38,16 @@ namespace Organization.Product.Domain.Common.Configurations
 
     public class Session
     {
+        public const string StoreType_InMemory = "InMemory";
+        public const string StoreType_Redis = "Redis";
+
+        // static
+        // ----------------------------------------
+        // instance
+
         public int IdleTimeout_Minute { get; set; }
+        public string StoreType { get; set; } = string.Empty;
+        public string ConnectionString { get; set; } = string.Empty;
+        public string InstanceName { get; set; } = string.Empty;
     }
 }

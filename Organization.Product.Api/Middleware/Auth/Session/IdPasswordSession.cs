@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Organization.Product.Domain.Common.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using AuthOptions_Session = Organization.Product.Domain.Common.Configurations.Session;
 
 namespace Organization.Product.Api.Middleware.Auth.Session
 {
@@ -10,7 +11,22 @@ namespace Organization.Product.Api.Middleware.Auth.Session
         public void AddAuthentication(IServiceCollection services, IConfiguration configuration)
         {
             var authOptions = new AuthOptions(configuration);
-            services.AddDistributedMemoryCache();
+            switch (authOptions.Session.StoreType)
+            {
+                case AuthOptions_Session.StoreType_InMemory:
+                    services.AddDistributedMemoryCache();
+                    break;
+                case AuthOptions_Session.StoreType_Redis:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = authOptions.Session.ConnectionString;
+                        options.InstanceName = authOptions.Session.InstanceName;
+                    });
+                    break;
+                default:
+                    break;
+            }
+
             services.AddSession(options =>
             {
                 options.Cookie.HttpOnly = true;
