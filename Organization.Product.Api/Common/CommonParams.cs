@@ -1,10 +1,9 @@
-﻿using Organization.Product.Domain.Common.ValueObjects;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Organization.Product.Api.Common
 {
-    public class CommonParams : ICommonParams
+    public class CommonParams
     {
         readonly HttpContext? _context;
 

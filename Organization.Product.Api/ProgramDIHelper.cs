@@ -14,7 +14,7 @@ namespace Organization.Product.Api
     {
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<ICommonParams, CommonParams>();
+            services.AddTransient<CommonParams>();
             services.AddTransient<LoginUseCase>();
             var authOption = new AuthOptions(configuration);
             switch (authOption.AuthType)

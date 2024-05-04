@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Organization.Product.Api.Common;
 using Organization.Product.ApplicationServices.UseCases._Sample;
-using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.Api.Controllers._Sample
 {
@@ -16,9 +16,9 @@ namespace Organization.Product.Api.Controllers._Sample
     {
         readonly WeatherForecastUseCase _useCase;
         readonly ILogger<WeatherForecastController> _logger;
-        readonly ICommonParams _commonParams;
+        readonly CommonParams _commonParams;
 
-        public WeatherForecastController(WeatherForecastUseCase useCase, ILogger<WeatherForecastController> logger, ICommonParams commonParams)
+        public WeatherForecastController(WeatherForecastUseCase useCase, ILogger<WeatherForecastController> logger, CommonParams commonParams)
         {
             this._useCase = useCase;
             this._logger = logger;
