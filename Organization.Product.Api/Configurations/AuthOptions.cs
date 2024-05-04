@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace Organization.Product.Domain.Common.Configurations
+﻿namespace Organization.Product.Api.Configurations
 {
     public class AuthOptions
     {

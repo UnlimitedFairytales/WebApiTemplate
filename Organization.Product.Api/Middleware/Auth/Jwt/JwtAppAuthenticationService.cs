@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using Organization.Product.Api.Configurations;
 using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Domain.Authentications.ValueObjects;
-using Organization.Product.Domain.Common.Configurations;
 using Organization.Product.Domain.Common.ValueObjects;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

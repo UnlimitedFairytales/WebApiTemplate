@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Api.Extensions
+﻿namespace Organization.Product.Api.Utils.Extensions
 {
     public static class ConfigurationExtension
     {

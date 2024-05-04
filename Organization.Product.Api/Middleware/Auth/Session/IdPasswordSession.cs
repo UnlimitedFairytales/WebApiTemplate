@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
-using Organization.Product.Domain.Common.Configurations;
+using Organization.Product.Api.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using AuthOptions_Session = Organization.Product.Domain.Common.Configurations.Session;
+using AuthOptions_Session = Organization.Product.Api.Configurations.Session;
 
 namespace Organization.Product.Api.Middleware.Auth.Session
 {
