@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Organization.Product.ApplicationServices.UseCases._Sample;
+using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.Api.Controllers._Sample
 {
@@ -15,11 +16,13 @@ namespace Organization.Product.Api.Controllers._Sample
     {
         readonly WeatherForecastUseCase _useCase;
         readonly ILogger<WeatherForecastController> _logger;
+        readonly ICommonParams _commonParams;
 
-        public WeatherForecastController(WeatherForecastUseCase useCase, ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(WeatherForecastUseCase useCase, ILogger<WeatherForecastController> logger, ICommonParams commonParams)
         {
             this._useCase = useCase;
             this._logger = logger;
+            this._commonParams = commonParams;
         }
 
         [HttpGet()]
@@ -30,8 +33,8 @@ namespace Organization.Product.Api.Controllers._Sample
             this._logger.LogDebug($"{nameof(this.Get_0_1)} Begin");
 #pragma warning disable CA2254 // テンプレートは静的な式にする必要があります
             this._logger.LogInformation($"{nameof(this.Get_0_1)} Begin {this.ControllerContext.HttpContext.Connection.RemoteIpAddress}");
+            this._logger.LogWarning($"{nameof(this.Get_0_1)} Begin User={this._commonParams.User}, Prog={this._commonParams.Prog}, Term={this._commonParams.Term}");
 #pragma warning restore CA2254 // テンプレートは静的な式にする必要があります
-            this._logger.LogWarning($"{nameof(this.Get_0_1)} Begin");
             this._logger.LogError($"{nameof(this.Get_0_1)} Begin");
             this._logger.LogCritical($"{nameof(this.Get_0_1)} Begin");
 

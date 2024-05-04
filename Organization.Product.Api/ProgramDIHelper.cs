@@ -1,10 +1,12 @@
-﻿using Organization.Product.Api.Middleware.Auth.Cookie;
+﻿using Organization.Product.Api.Common;
+using Organization.Product.Api.Middleware.Auth.Cookie;
 using Organization.Product.Api.Middleware.Auth.Jwt;
 using Organization.Product.Api.Middleware.Auth.Session;
 using Organization.Product.ApplicationServices.UseCases._Sample;
 using Organization.Product.ApplicationServices.UseCases.Login;
 using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Domain.Common.Configurations;
+using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.Api
 {
@@ -12,6 +14,7 @@ namespace Organization.Product.Api
     {
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<ICommonParams, CommonParams>();
             services.AddTransient<LoginUseCase>();
             var authOption = new AuthOptions(configuration);
             switch (authOption.AuthType)
