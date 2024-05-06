@@ -3,6 +3,7 @@ using Organization.Product.Api.Configurations;
 using Organization.Product.Api.Middleware.Auth.Cookie;
 using Organization.Product.Api.Middleware.Auth.Jwt;
 using Organization.Product.Api.Middleware.Auth.Session;
+using Organization.Product.Api.Utils.Hasher;
 using Organization.Product.ApplicationServices.UseCases._Sample;
 using Organization.Product.ApplicationServices.UseCases.Login;
 using Organization.Product.Domain.Authentications.Services;
@@ -30,6 +31,7 @@ namespace Organization.Product.Api
                 default:
                     break;
             }
+            services.AddTransient<IHasher, Pbkdf2Hasher>();
 
             // Options
             services.AddTransient<AuthOptions>();

@@ -1,5 +1,4 @@
 ﻿using Organization.Product.Domain.Authentications.Services;
-using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.ApplicationServices.UseCases.Login
 {
@@ -15,8 +14,6 @@ namespace Organization.Product.ApplicationServices.UseCases.Login
 
         public LoginResultDto Login(LoginRequestDto requestDto)
         {
-            var isValid = requestDto.UserCd == "USER00" && requestDto.Password == "USER00";
-            if (!isValid) throw AppException.Create(AppMessage.W5001());
             var result = this._appAuthenticationService.Authenticate(requestDto.UserCd ?? "", requestDto.Password);
             return new LoginResultDto(result.Token);
         }

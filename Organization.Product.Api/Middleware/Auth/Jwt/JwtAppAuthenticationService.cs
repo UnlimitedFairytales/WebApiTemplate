@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Organization.Product.Api.Configurations;
+using Organization.Product.Api.Utils.Hasher;
 using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Domain.Authentications.ValueObjects;
 using Organization.Product.Domain.Common.ValueObjects;
@@ -52,14 +53,17 @@ namespace Organization.Product.Api.Middleware.Auth.Jwt
         // instance
 
         readonly AuthOptions _authOptions;
+        readonly IHasher _hasher;
 
-        public JwtAppAuthenticationService(AuthOptions authOptions)
+        public JwtAppAuthenticationService(AuthOptions authOptions, IHasher hasher)
         {
             this._authOptions = authOptions;
+            this._hasher = hasher;
         }
 
         public AppAuthenticationResult Authenticate(string userCd, string? password)
         {
+            IHasher.Validate(userCd, password!, this._hasher);
             var token = GenerateToken(
                 this._authOptions.Jwt.Issuer,
                 this._authOptions.Jwt.Audience,
