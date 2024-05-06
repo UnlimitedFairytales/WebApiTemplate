@@ -6,7 +6,7 @@ namespace Organization.Product.Gateway.Authentications
 {
     public class Dummy_AppAuthenticatedUserRepository : IAppAuthenticatedUserRepository
     {
-        IHasher _hasher;
+        readonly IHasher _hasher;
 
         public Dummy_AppAuthenticatedUserRepository(IHasher hasher)
         {
