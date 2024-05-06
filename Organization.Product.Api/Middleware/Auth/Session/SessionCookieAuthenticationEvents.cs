@@ -5,7 +5,7 @@ namespace Organization.Product.Api.Middleware.Auth.Session
 {
     public class SessionCookieAuthenticationEvents : CookieAuthenticationEvents
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        readonly IHttpContextAccessor _httpContextAccessor;
 
         public SessionCookieAuthenticationEvents(IHttpContextAccessor httpContextAccessor)
         {

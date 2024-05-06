@@ -1,6 +1,5 @@
 ﻿using Organization.Product.Domain.Authentications.Entities;
 using Organization.Product.Domain.Authentications.Repositories;
-using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Domain.Common.ValueObjects;
 
 namespace Organization.Product.Gateway.Authentications
