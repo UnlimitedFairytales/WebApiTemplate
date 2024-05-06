@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Organization.Product.Domain.Authentications.Services;
 
 namespace Organization.Product.Api.Utils.Hasher
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Organization.Product.Api.Utils.Hasher;
+using Organization.Product.Domain.Authentications.Repositories;
 using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Domain.Authentications.ValueObjects;
 using System.Security.Claims;
@@ -12,21 +12,24 @@ namespace Organization.Product.Api.Middleware.Auth.Session
         public static readonly string SESSION_TOKEN = "SessionToken";
 
         readonly IHttpContextAccessor _httpContextAccessor;
-        readonly IHasher _hasher;
+        readonly IAppAuthenticatedUserRepository _appAuthenticatedUserRepository;
 
-        public SessionAppAuthenticationService(IHttpContextAccessor httpContextAccessor, IHasher hasher)
+        public SessionAppAuthenticationService(IHttpContextAccessor httpContextAccessor, IAppAuthenticatedUserRepository appAuthenticatedUserRepository)
         {
             this._httpContextAccessor = httpContextAccessor;
-            this._hasher = hasher;
+            this._appAuthenticatedUserRepository = appAuthenticatedUserRepository;
         }
 
         public AppAuthenticationResult Authenticate(string userCd, string? password)
         {
-            IHasher.Validate(userCd, password!, this._hasher);
+            var user = this._appAuthenticatedUserRepository.FindBy(userCd, password!);
             var sessionToken = Guid.NewGuid().ToString("N");
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, userCd),
+                new Claim(ClaimTypes.NameIdentifier, user.UserCd ?? ""),
+                new Claim(ClaimTypes.Name, user.UserName ?? ""),
+                new Claim(ClaimTypes.Email, user.Email ?? ""),
+                new Claim(ClaimTypes.Version, (user.Ver ?? 0).ToString()),
                 new Claim(SESSION_TOKEN, sessionToken)
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

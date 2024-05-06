@@ -1,6 +1,6 @@
 ﻿using Organization.Product.Domain.Common.ValueObjects;
 
-namespace Organization.Product.Api.Utils.Hasher
+namespace Organization.Product.Domain.Authentications.Services
 {
     public interface IHasher
     {

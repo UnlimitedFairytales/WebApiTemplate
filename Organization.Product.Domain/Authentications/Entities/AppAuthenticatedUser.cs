@@ -1,6 +1,6 @@
-﻿namespace Organization.Product.Domain.Common.Entities
+﻿namespace Organization.Product.Domain.Authentications.Entities
 {
-    public class UserInfo
+    public class AppAuthenticatedUser
     {
         public long? UserId { get; set; }
         public string? UserCd { get; set; }

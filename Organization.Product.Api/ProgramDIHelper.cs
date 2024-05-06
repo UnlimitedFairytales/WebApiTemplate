@@ -6,7 +6,9 @@ using Organization.Product.Api.Middleware.Auth.Session;
 using Organization.Product.Api.Utils.Hasher;
 using Organization.Product.ApplicationServices.UseCases._Sample;
 using Organization.Product.ApplicationServices.UseCases.Login;
+using Organization.Product.Domain.Authentications.Repositories;
 using Organization.Product.Domain.Authentications.Services;
+using Organization.Product.Gateway.Authentications;
 
 namespace Organization.Product.Api
 {
@@ -32,6 +34,7 @@ namespace Organization.Product.Api
                     break;
             }
             services.AddTransient<IHasher, Pbkdf2Hasher>();
+            services.AddTransient<IAppAuthenticatedUserRepository, Dummy_AppAuthenticatedUserRepository>();
 
             // Options
             services.AddTransient<AuthOptions>();
