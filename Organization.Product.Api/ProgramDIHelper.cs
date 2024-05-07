@@ -8,6 +8,7 @@ using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Gateways.Authentications;
 using Organization.Product.Shared.Configurations;
 using Organization.Product.Shared.Utils;
+using Organization.Product.Shared.Utils.Hasher;
 
 namespace Organization.Product.Api
 {

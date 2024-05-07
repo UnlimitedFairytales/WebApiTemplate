@@ -1,6 +1,7 @@
 ﻿using Organization.Product.Domain.Authentications.Entities;
 using Organization.Product.Domain.Authentications.Repositories;
 using Organization.Product.Domain.Common.ValueObjects;
+using Organization.Product.Shared.Utils.Hasher;
 
 namespace Organization.Product.Gateways.Authentications
 {

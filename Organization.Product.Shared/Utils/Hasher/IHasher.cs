@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Gateways.Authentications
+﻿namespace Organization.Product.Shared.Utils.Hasher
 {
     public interface IHasher
     {
