@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Organization.Product.Api.Configurations;
+using Organization.Product.Shared.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 

@@ -9,10 +9,4 @@
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Organization.Product.Domain\Organization.Product.Domain.csproj" />
-    <ProjectReference Include="..\Organization.Product.Shared\Organization.Product.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

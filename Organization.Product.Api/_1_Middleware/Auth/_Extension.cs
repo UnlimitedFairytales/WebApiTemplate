@@ -1,7 +1,7 @@
 ﻿using Organization.Product.Api._1_Middleware.Auth.Cookie;
 using Organization.Product.Api._1_Middleware.Auth.Jwt;
 using Organization.Product.Api._1_Middleware.Auth.Session;
-using Organization.Product.Api.Configurations;
+using Organization.Product.Shared.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api._1_Middleware.Auth

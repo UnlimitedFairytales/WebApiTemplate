@@ -1,4 +1,4 @@
-﻿using Organization.Product.Api.Utils;
+﻿using Organization.Product.Shared.Utils;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;

@@ -1,7 +1,7 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
-namespace Organization.Product.Api.Utils
+namespace Organization.Product.Shared.Utils
 {
     // Thread safe singleton
     // https://csharpindepth.com/Articles/Singleton

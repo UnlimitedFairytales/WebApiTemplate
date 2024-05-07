@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Organization.Product.Api.Common;
 using Organization.Product.ApplicationServices.UseCases._Sample;
+using Organization.Product.Shared.Utils;
 
 namespace Organization.Product.Api.Controllers._Sample
 {

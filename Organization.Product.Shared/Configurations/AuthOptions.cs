@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Api.Configurations
+﻿namespace Organization.Product.Shared.Configurations
 {
     public class AuthOptions
     {

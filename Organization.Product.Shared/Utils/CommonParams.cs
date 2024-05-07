@@ -1,7 +1,7 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
 using System.Security.Claims;
 
-namespace Organization.Product.Api.Common
+namespace Organization.Product.Shared.Utils
 {
     public class CommonParams
     {

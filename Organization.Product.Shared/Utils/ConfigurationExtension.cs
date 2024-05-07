@@ -1,4 +1,4 @@
-﻿namespace Organization.Product.Api.Utils.Extensions
+﻿namespace Organization.Product.Shared.Utils
 {
     public static class ConfigurationExtension
     {

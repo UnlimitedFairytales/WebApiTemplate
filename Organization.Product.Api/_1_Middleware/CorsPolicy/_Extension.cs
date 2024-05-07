@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
-using Organization.Product.Api.Utils.Extensions;
+using Organization.Product.Shared.Utils;
 
 namespace Organization.Product.Api._1_Middleware.CorsPolicy
 {

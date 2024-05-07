@@ -1,13 +1,13 @@
 ﻿using Organization.Product.Api._1_Middleware.Auth.Cookie;
 using Organization.Product.Api._1_Middleware.Auth.Jwt;
 using Organization.Product.Api._1_Middleware.Auth.Session;
-using Organization.Product.Api.Common;
-using Organization.Product.Api.Configurations;
 using Organization.Product.ApplicationServices.UseCases._Sample;
 using Organization.Product.ApplicationServices.UseCases.Login;
 using Organization.Product.Domain.Authentications.Repositories;
 using Organization.Product.Domain.Authentications.Services;
 using Organization.Product.Gateway.Authentications;
+using Organization.Product.Shared.Configurations;
+using Organization.Product.Shared.Utils;
 
 namespace Organization.Product.Api
 {

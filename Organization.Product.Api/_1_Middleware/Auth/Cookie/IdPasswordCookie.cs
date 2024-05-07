@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.OpenApi.Models;
-using Organization.Product.Api.Configurations;
+using Organization.Product.Shared.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api._1_Middleware.Auth.Cookie
