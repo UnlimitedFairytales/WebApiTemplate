@@ -1,9 +1,9 @@
 ﻿using Asp.Versioning.ApiExplorer;
 using Microsoft.Extensions.Options;
-using Organization.Product.Api.Middleware.Auth;
+using Organization.Product.Api._1_Middleware.Auth;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Organization.Product.Api.Middleware.Swashbuckle
+namespace Organization.Product.Api._1_Middleware.Swashbuckle
 {
 #pragma warning disable IDE1006
     public static class _Extension

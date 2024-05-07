@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-namespace Organization.Product.Api.Middleware.Auth.Session
+namespace Organization.Product.Api._1_Middleware.Auth.Session
 {
     public class SessionCookieAuthenticationEvents : CookieAuthenticationEvents
     {

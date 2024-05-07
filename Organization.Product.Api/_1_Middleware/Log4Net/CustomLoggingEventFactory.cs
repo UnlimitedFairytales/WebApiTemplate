@@ -1,7 +1,7 @@
 ﻿using log4net.Core;
 using Microsoft.Extensions.Logging.Log4Net.AspNetCore.Entities;
 
-namespace Organization.Product.Api.Middleware.Log4Net
+namespace Organization.Product.Api._1_Middleware.Log4Net
 {
     public class CustomLoggingEventFactory : ILog4NetLoggingEventFactory
     {

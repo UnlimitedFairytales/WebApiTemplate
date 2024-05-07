@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Organization.Product.Api._6_ActionFilters;
 using Organization.Product.ApplicationServices;
 using Organization.Product.Domain.Common.ValueObjects;
 
-namespace Organization.Product.Api.Filters
+namespace Organization.Product.Api._4_ExceptionFilters
 {
     public class ExceptionHandlingFilter : IExceptionFilter
     {
@@ -23,7 +24,7 @@ namespace Organization.Product.Api.Filters
                 var requestPayload = "";
                 try
                 {
-                    var actionArguments = context.HttpContext.Items[BindModelCacheFilter.Key] as IDictionary<string, object?>;
+                    var actionArguments = context.HttpContext.Items[BindModelCacheFilter.KEY] as IDictionary<string, object?>;
                     if (0 < actionArguments?.Count)
                     {
                         object requestDto = actionArguments.First().Value!;

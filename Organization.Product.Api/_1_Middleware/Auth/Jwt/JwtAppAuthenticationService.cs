@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Organization.Product.Api.Middleware.Auth.Jwt
+namespace Organization.Product.Api._1_Middleware.Auth.Jwt
 {
     public class JwtAppAuthenticationService : IAppAuthenticationService
     {

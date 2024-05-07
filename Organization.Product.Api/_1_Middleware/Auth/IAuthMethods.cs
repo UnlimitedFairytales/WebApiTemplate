@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Organization.Product.Api.Middleware.Auth
+namespace Organization.Product.Api._1_Middleware.Auth
 {
     public interface IAuthMethods
     {

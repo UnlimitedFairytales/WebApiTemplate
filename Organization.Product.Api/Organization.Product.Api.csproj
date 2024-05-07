@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Organization.Product.Gateway\Organization.Product.Gateway.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_2_AuthorizationFilters\" />
+    <Folder Include="_3_ResourceFilters\" />
+    <Folder Include="_5_ModelBindings\" />
+  </ItemGroup>
+
 </Project>

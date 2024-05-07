@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Organization.Product.Api.Utils.Extensions;
 
-namespace Organization.Product.Api.Middleware.CorsPolicy
+namespace Organization.Product.Api._1_Middleware.CorsPolicy
 {
 #pragma warning disable IDE1006
     public static class _Extension

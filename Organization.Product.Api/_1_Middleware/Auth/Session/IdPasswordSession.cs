@@ -2,33 +2,48 @@
 using Microsoft.OpenApi.Models;
 using Organization.Product.Api.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using AuthOptions_Session = Organization.Product.Api.Configurations.Session;
 
-namespace Organization.Product.Api.Middleware.Auth.Cookie
+namespace Organization.Product.Api._1_Middleware.Auth.Session
 {
-    public class IdPasswordCookie : IAuthMethods
+    public class IdPasswordSession : IAuthMethods
     {
         public void AddAuthentication(IServiceCollection services, IConfiguration configuration)
         {
             var authOptions = new AuthOptions(configuration);
+            switch (authOptions.Session.StoreType)
+            {
+                case AuthOptions_Session.StoreType_InMemory:
+                    services.AddDistributedMemoryCache();
+                    break;
+                case AuthOptions_Session.StoreType_Redis:
+                    services.AddStackExchangeRedisCache(options =>
+                    {
+                        options.Configuration = authOptions.Session.ConnectionString;
+                        options.InstanceName = authOptions.Session.InstanceName;
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+                options.IdleTimeout = TimeSpan.FromMinutes(authOptions.Session.IdleTimeout_Minute);
+            });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
                     options.Cookie.SameSite = SameSiteMode.Strict;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(authOptions.Cookie.Expire_Minute);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(authOptions.Session.IdleTimeout_Minute * 2);
                     options.SlidingExpiration = true;
-                    options.Events.OnRedirectToAccessDenied = context =>
-                    {
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        return Task.CompletedTask;
-                    };
-                    options.Events.OnRedirectToLogin = context =>
-                    {
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                        return Task.CompletedTask;
-                    };
-                    options.Events.OnRedirectToLogout = context => Task.CompletedTask;
-                    options.Events.OnRedirectToReturnUrl = context => Task.CompletedTask;
+                    options.EventsType = typeof(SessionCookieAuthenticationEvents);
                 });
+            services.AddScoped<SessionCookieAuthenticationEvents>();
         }
 
         public void AddSecurityDefinition_AddSecurityRequirement(SwaggerGenOptions options)
@@ -38,7 +53,7 @@ namespace Organization.Product.Api.Middleware.Auth.Cookie
             {
                 Type = SecuritySchemeType.ApiKey,
                 In = ParameterLocation.Cookie,
-                Name = ".AspNetCore.Cookies",
+                Name = ".AspNetCore.Cookies & .AspNetCore.Session",
                 Description = "!!ATTENTION!! Cookie is a forbidden header name! \"Authorize\" button is not work!"
             });
             options.AddSecurityRequirement(
@@ -60,6 +75,7 @@ namespace Organization.Product.Api.Middleware.Auth.Cookie
 
         public void UseAuthentication(WebApplication app, IConfiguration configuration)
         {
+            app.UseSession();
             app.UseAuthentication();
         }
     }

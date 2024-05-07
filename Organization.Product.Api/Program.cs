@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
-using Organization.Product.Api.Filters;
-using Organization.Product.Api.Middleware.ApiExplorer;
-using Organization.Product.Api.Middleware.Auth;
-using Organization.Product.Api.Middleware.CorsPolicy;
-using Organization.Product.Api.Middleware.JsonSerializerOptions;
-using Organization.Product.Api.Middleware.Log4Net;
-using Organization.Product.Api.Middleware.Swashbuckle;
+using Organization.Product.Api._1_Middleware.ApiExplorer;
+using Organization.Product.Api._1_Middleware.Auth;
+using Organization.Product.Api._1_Middleware.CorsPolicy;
+using Organization.Product.Api._1_Middleware.JsonSerializerOptions;
+using Organization.Product.Api._1_Middleware.Log4Net;
+using Organization.Product.Api._1_Middleware.Swashbuckle;
+using Organization.Product.Api._4_ExceptionFilters;
+using Organization.Product.Api._6_ActionFilters;
 using Organization.Product.ApplicationServices.Aop;
 
 namespace Organization.Product.Api
@@ -261,5 +262,19 @@ ________________________________________________________________________________
     - SignIn  : トークンを発行し、CookieとSessionに保存
     - 検証    : CookieとSessionのトークンを比較
     - SignOut : Sessionをクリア
+
+________________________________________________________________________________
+# 10. MiddlewareとFilter
+________________________________________________________________________________
+https://learn.microsoft.com/ja-jp/aspnet/core/mvc/controllers/filters?view=aspnetcore-8.0
+
+MAREMA Action
+
+1. Middleware（Use順の通り）
+2. Authorization filter
+3. Resource filter
+4. Exception filter
+5. Model binding
+6. Action filter
 
 */

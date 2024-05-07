@@ -3,7 +3,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Organization.Product.Api.Middleware.JsonSerializerOptions
+namespace Organization.Product.Api._1_Middleware.JsonSerializerOptions
 {
 #pragma warning disable IDE1006
     public static class _Extension

@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 
-namespace Organization.Product.Api.Middleware.ApiExplorer
+namespace Organization.Product.Api._1_Middleware.ApiExplorer
 {
 #pragma warning disable IDE1006
     public static class _Extension
