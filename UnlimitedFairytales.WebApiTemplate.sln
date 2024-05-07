@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Product.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Product.ApplicationServices", "Organization.Product.ApplicationServices\Organization.Product.ApplicationServices.csproj", "{1DB13C82-14E8-49F5-93FD-6FEDA06F8A86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Product.Gateway", "Organization.Product.Gateway\Organization.Product.Gateway.csproj", "{2CB12E2F-196D-4D59-999E-87154F164003}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Product.Gateways", "Organization.Product.Gateways\Organization.Product.Gateways.csproj", "{2CB12E2F-196D-4D59-999E-87154F164003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Organization.Product.Shared", "Organization.Product.Shared\Organization.Product.Shared.csproj", "{8C4BA1E7-F4B1-4013-A039-90F9F01AF0B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Organization.Product.Shared", "Organization.Product.Shared\Organization.Product.Shared.csproj", "{8C4BA1E7-F4B1-4013-A039-90F9F01AF0B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

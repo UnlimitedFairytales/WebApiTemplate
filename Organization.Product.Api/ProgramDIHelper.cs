@@ -5,7 +5,7 @@ using Organization.Product.ApplicationServices.UseCases._Sample;
 using Organization.Product.ApplicationServices.UseCases.Login;
 using Organization.Product.Domain.Authentications.Repositories;
 using Organization.Product.Domain.Authentications.Services;
-using Organization.Product.Gateway.Authentications;
+using Organization.Product.Gateways.Authentications;
 using Organization.Product.Shared.Configurations;
 using Organization.Product.Shared.Utils;
 

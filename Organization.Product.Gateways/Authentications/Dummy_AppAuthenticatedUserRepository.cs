@@ -2,7 +2,7 @@
 using Organization.Product.Domain.Authentications.Repositories;
 using Organization.Product.Domain.Common.ValueObjects;
 
-namespace Organization.Product.Gateway.Authentications
+namespace Organization.Product.Gateways.Authentications
 {
     public class Dummy_AppAuthenticatedUserRepository : IAppAuthenticatedUserRepository
     {

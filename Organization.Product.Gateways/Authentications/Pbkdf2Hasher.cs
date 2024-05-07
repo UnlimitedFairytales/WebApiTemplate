@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace Organization.Product.Gateway.Authentications
+namespace Organization.Product.Gateways.Authentications
 {
     // 参考
     // https://source.dot.net/#Microsoft.Extensions.Identity.Core/PasswordHasher.cs,f120517802334c3b,references
