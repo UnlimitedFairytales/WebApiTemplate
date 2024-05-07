@@ -38,7 +38,7 @@ namespace Organization.Product.ApplicationServices.Aop
 
         public override void OnException(MethodExecutionArgs arg)
         {
-            _logger?.Log(this._exceptionLogLevel, "{FullName}.{Name} OnException", arg.Method.ReflectedType?.FullName, arg.Method.Name);
+            // _logger?.Log(this._exceptionLogLevel, "{FullName}.{Name} OnException", arg.Method.ReflectedType?.FullName, arg.Method.Name);
         }
     }
 }

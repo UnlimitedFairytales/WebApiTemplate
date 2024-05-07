@@ -39,7 +39,14 @@ namespace Organization.Product.Api._4_ExceptionFilters
                 catch
                 {
                 }
-                this._logger.LogError(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
+                if (err.ID.StartsWith("W"))
+                {
+                    this._logger.LogWarning(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
+                }
+                else
+                {
+                    this._logger.LogError(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
+                }
 
                 var errDto = new BaseResultDto() { Error = err };
                 context.Result = new JsonResult(errDto);
