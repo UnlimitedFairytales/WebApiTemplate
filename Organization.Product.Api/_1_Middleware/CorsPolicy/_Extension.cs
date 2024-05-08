@@ -15,11 +15,11 @@ namespace Organization.Product.Api._1_Middleware.CorsPolicy
             foreach (var cnf in cnfs)
             {
                 if (cnf == null || !cnf.Exists()) continue;
-                options.AddPolicy(cnf["Name"], builder =>
+                options.AddPolicy(cnf["Name"]!, builder =>
                 {
-                    builder.WithOrigins(cnf.GetValueArray<string>("Origins"))
-                    .WithMethods(cnf.GetValueArray<string>("Methods"))
-                    .WithHeaders(cnf.GetValueArray<string>("Headers"))
+                    builder.WithOrigins(cnf.GetValueArray<string>("Origins")!)
+                    .WithMethods(cnf.GetValueArray<string>("Methods")!)
+                    .WithHeaders(cnf.GetValueArray<string>("Headers")!)
                     .AllowCredentials();
                 });
             }
@@ -33,7 +33,7 @@ namespace Organization.Product.Api._1_Middleware.CorsPolicy
             foreach (var cnf in cnfs)
             {
                 if (cnf == null || !cnf.Exists()) continue;
-                app.UseCors(cnf["Name"]);
+                app.UseCors(cnf["Name"]!);
             }
         }
     }

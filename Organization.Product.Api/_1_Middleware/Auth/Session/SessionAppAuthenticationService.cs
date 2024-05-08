@@ -26,11 +26,11 @@ namespace Organization.Product.Api._1_Middleware.Auth.Session
             var sessionToken = Guid.NewGuid().ToString("N");
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserCd ?? ""),
-                new Claim(ClaimTypes.Name, user.UserName ?? ""),
-                new Claim(ClaimTypes.Email, user.Email ?? ""),
-                new Claim(ClaimTypes.Version, (user.Ver ?? 0).ToString()),
-                new Claim(SESSION_TOKEN, sessionToken)
+                new(ClaimTypes.NameIdentifier, user.UserCd ?? ""),
+                new(ClaimTypes.Name, user.UserName ?? ""),
+                new(ClaimTypes.Email, user.Email ?? ""),
+                new(ClaimTypes.Version, (user.Ver ?? 0).ToString()),
+                new(SESSION_TOKEN, sessionToken)
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties()

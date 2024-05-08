@@ -24,7 +24,7 @@ namespace Organization.Product.ApplicationServices.UseCases._Sample
             var text = isPost ? "Post" : "Get";
             var data = new WeatherForecast[]
             {
-                new WeatherForecast()
+                new()
                 {
                     Date = DateTime.Now,
                     TemperatureC = requestDto.P2_Int,

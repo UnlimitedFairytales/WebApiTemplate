@@ -9,7 +9,7 @@ namespace Organization.Product.Api._1_Middleware.JsonSerializerOptions
     public static class _Extension
 #pragma warning restore IDE1006
     {
-        // https://learn.microsoft.com/ja-jp/aspnet/core/web-api/advanced/formatting?view=aspnetcore-6.0
+        // https://learn.microsoft.com/ja-jp/aspnet/core/web-api/advanced/formatting?view=aspnetcore-8.0
         // ※ Encoderについて補足
         // 1. デフォルト値はnull
         // 2. null                                        : UnsafeRelaxedJsonEscapingと同じ
@@ -31,7 +31,7 @@ namespace Organization.Product.Api._1_Middleware.JsonSerializerOptions
                 options.JsonSerializerOptions.AllowTrailingCommas = cnf.GetValue<bool>("AllowTrailingCommas");
                 // options.JsonSerializerOptions.Converters
                 options.JsonSerializerOptions.DefaultBufferSize = cnf.GetValue<int>("DefaultBufferSize");
-                options.JsonSerializerOptions.DefaultIgnoreCondition = Enum.Parse<JsonIgnoreCondition>(cnf["DefaultIgnoreCondition"]);
+                options.JsonSerializerOptions.DefaultIgnoreCondition = Enum.Parse<JsonIgnoreCondition>(cnf["DefaultIgnoreCondition"]!);
                 options.JsonSerializerOptions.DictionaryKeyPolicy = cnf["DictionaryKeyPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null;
                 options.JsonSerializerOptions.Encoder = encoder;
                 options.JsonSerializerOptions.IgnoreReadOnlyFields = cnf.GetValue<bool>("IgnoreReadOnlyFields");
@@ -41,9 +41,9 @@ namespace Organization.Product.Api._1_Middleware.JsonSerializerOptions
                 options.JsonSerializerOptions.NumberHandling = (JsonNumberHandling)cnf.GetValue<int>("NumberHandling");
                 options.JsonSerializerOptions.PropertyNameCaseInsensitive = cnf.GetValue<bool>("PropertyNameCaseInsensitive");
                 options.JsonSerializerOptions.PropertyNamingPolicy = cnf["PropertyNamingPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null;
-                options.JsonSerializerOptions.ReadCommentHandling = Enum.Parse<JsonCommentHandling>(cnf["ReadCommentHandling"]);
+                options.JsonSerializerOptions.ReadCommentHandling = Enum.Parse<JsonCommentHandling>(cnf["ReadCommentHandling"]!);
                 // options.JsonSerializerOptions.ReferenceHandler
-                options.JsonSerializerOptions.UnknownTypeHandling = Enum.Parse<JsonUnknownTypeHandling>(cnf["UnknownTypeHandling"]);
+                options.JsonSerializerOptions.UnknownTypeHandling = Enum.Parse<JsonUnknownTypeHandling>(cnf["UnknownTypeHandling"]!);
                 options.JsonSerializerOptions.WriteIndented = cnf.GetValue<bool>("WriteIndented");
             });
         }

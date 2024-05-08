@@ -32,12 +32,10 @@ namespace Organization.Product.Api
                 configure.Filters.Add<ExceptionHandlingFilter>();
             }).MyAddJsonOptions(builder.Configuration);
             builder.Services.MyAddAuthentication(builder.Configuration);
-            builder.Services.AddAuthorization(options =>
-            {
-                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            builder.Services.AddAuthorizationBuilder()
+                .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-                    .Build();
-            });
+                    .Build());
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             // builder.Services.AddEndpointsApiExplorer();
             // builder.Services.AddSwaggerGen();

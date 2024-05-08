@@ -5,7 +5,7 @@ namespace Organization.Product.Shared.Utils
 {
     // Thread safe singleton
     // https://csharpindepth.com/Articles/Singleton
-    public class MyJavaScriptEncoder
+    public static class MyJavaScriptEncoder
     {
         // 「<>&'"+」「\`」はエスケープされる
         public static readonly JavaScriptEncoder Japanese = JavaScriptEncoder.Create(

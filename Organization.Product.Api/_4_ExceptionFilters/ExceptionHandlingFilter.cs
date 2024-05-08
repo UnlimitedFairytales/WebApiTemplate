@@ -3,11 +3,22 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Organization.Product.Api._6_ActionFilters;
 using Organization.Product.ApplicationServices;
 using Organization.Product.Domain.Common.ValueObjects;
+using Organization.Product.Shared.Utils;
+using System.Text.Json;
 
 namespace Organization.Product.Api._4_ExceptionFilters
 {
     public class ExceptionHandlingFilter : IExceptionFilter
     {
+        static readonly JsonSerializerOptions JAPANESE_OPTIONS = new()
+        {
+            Encoder = MyJavaScriptEncoder.Japanese
+        };
+
+        // static
+        // ----------------------------------------
+        // instance
+
         readonly ILogger<ExceptionHandlingFilter> _logger;
 
         public ExceptionHandlingFilter(ILogger<ExceptionHandlingFilter> logger)
@@ -28,18 +39,13 @@ namespace Organization.Product.Api._4_ExceptionFilters
                     if (0 < actionArguments?.Count)
                     {
                         object requestDto = actionArguments.First().Value!;
-                        var options = new System.Text.Json.JsonSerializerOptions()
-                        {
-                            IncludeFields = true,
-                            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
-                        };
-                        requestPayload = System.Text.Json.JsonSerializer.Serialize(requestDto, options);
+                        requestPayload = JsonSerializer.Serialize(requestDto, JAPANESE_OPTIONS);
                     }
                 }
                 catch
                 {
                 }
-                if (err.ID.StartsWith("W"))
+                if (err.ID.StartsWith('W'))
                 {
                     this._logger.LogWarning(null, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
                 }

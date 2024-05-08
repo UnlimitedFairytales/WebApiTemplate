@@ -29,7 +29,7 @@ namespace Organization.Product.Api._1_Middleware.Swashbuckle
                         Version = description.ApiVersion.ToString(),
                         Description = cnf["Description"],
                         Contact = new OpenApiContact { Name = cnf["ContactName"], Email = cnf["ContactEmail"] },
-                        License = new OpenApiLicense { Name = cnf["LicenseName"], Url = new Uri(cnf["LicenseUrl"]) },
+                        License = new OpenApiLicense { Name = cnf["LicenseName"], Url = new Uri(cnf["LicenseUrl"]!) },
                     });
             }
         }

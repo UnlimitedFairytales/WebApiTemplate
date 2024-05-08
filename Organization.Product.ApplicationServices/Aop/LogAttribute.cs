@@ -18,12 +18,10 @@ namespace Organization.Product.ApplicationServices.Aop
         // instance
 
         readonly LogLevel _logLevel;
-        readonly LogLevel _exceptionLogLevel;
 
-        public LogAttribute(LogLevel logLevel = LogLevel.Information, LogLevel exceptionLogLevel = LogLevel.Error)
+        public LogAttribute(LogLevel logLevel = LogLevel.Information)
         {
             this._logLevel = logLevel;
-            this._exceptionLogLevel = exceptionLogLevel;
         }
 
         public override void OnEntry(MethodExecutionArgs arg)
@@ -34,11 +32,6 @@ namespace Organization.Product.ApplicationServices.Aop
         public override void OnExit(MethodExecutionArgs arg)
         {
             _logger?.Log(this._logLevel, "{FullName}.{Name} OnExit", arg.Method.ReflectedType?.FullName, arg.Method.Name);
-        }
-
-        public override void OnException(MethodExecutionArgs arg)
-        {
-            // _logger?.Log(this._exceptionLogLevel, "{FullName}.{Name} OnException", arg.Method.ReflectedType?.FullName, arg.Method.Name);
         }
     }
 }

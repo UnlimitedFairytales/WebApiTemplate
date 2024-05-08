@@ -24,10 +24,10 @@ namespace Organization.Product.Api._1_Middleware.Auth.Cookie
             var user = this._appAuthenticatedUserRepository.FindBy(userCd, password!);
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserCd ?? ""),
-                new Claim(ClaimTypes.Name, user.UserName ?? ""),
-                new Claim(ClaimTypes.Email, user.Email ?? ""),
-                new Claim(ClaimTypes.Version, (user.Ver ?? 0).ToString()),
+                new(ClaimTypes.NameIdentifier, user.UserCd ?? ""),
+                new(ClaimTypes.Name, user.UserName ?? ""),
+                new(ClaimTypes.Email, user.Email ?? ""),
+                new(ClaimTypes.Version, (user.Ver ?? 0).ToString()),
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties()

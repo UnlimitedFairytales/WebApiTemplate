@@ -2,10 +2,10 @@ namespace Organization.Product.Domain._Sample.Entities
 {
     public class WeatherForecast
     {
-        public static readonly string[] Summaries = new[]
-        {
+        public static readonly string[] Summaries =
+        [
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        ];
 
         // static
         // ----------------------------------------

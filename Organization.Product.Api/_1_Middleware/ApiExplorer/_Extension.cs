@@ -15,7 +15,7 @@ namespace Organization.Product.Api._1_Middleware.ApiExplorer
         public static void MyAddApiVersioning_AddVersionedApiExplorer(this IServiceCollection services, IConfiguration configuration)
         {
             var cnf = configuration.GetSection("ApiVersioning");
-            var parameterName = cnf["ApiVersionReaderParameterName"];
+            var parameterName = cnf["ApiVersionReaderParameterName"]!;
             IApiVersionReader apiVersionReader =
                 cnf["ApiVersionReader"] == "QueryStringApiVersionReader" ? new QueryStringApiVersionReader(parameterName) :
                 cnf["ApiVersionReader"] == "HeaderApiVersionReader" ? new HeaderApiVersionReader(parameterName) :
@@ -33,7 +33,7 @@ namespace Organization.Product.Api._1_Middleware.ApiExplorer
             });
             builder.AddApiExplorer(options =>
             {
-                options.GroupNameFormat = cnf["GroupNameFormat"];
+                options.GroupNameFormat = cnf["GroupNameFormat"]!;
                 options.SubstituteApiVersionInUrl = apiVersionReader is UrlSegmentApiVersionReader; // RouteAttribute.Templateで{version:apiVersion}を有効にするか;
             });
         }

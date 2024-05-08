@@ -32,15 +32,15 @@ namespace Organization.Product.Api._1_Middleware.Auth.Jwt
             string secretKey,
             AppAuthenticatedUser user)
         {
-            var claims = new[]
+            var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, subject),
-                new Claim(JwtRegisteredClaimNames.Iat, GetUnixTime(issuedAt).ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, jwtId),
+                new(JwtRegisteredClaimNames.Sub, subject),
+                new(JwtRegisteredClaimNames.Iat, GetUnixTime(issuedAt).ToString()),
+                new(JwtRegisteredClaimNames.Jti, jwtId),
                 // private claim
-                new Claim(JwtRegisteredClaimNames.Name, user.UserName ?? ""),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-                new Claim(VER,  (user.Ver ?? 0).ToString()),
+                new(JwtRegisteredClaimNames.Name, user.UserName ?? ""),
+                new(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+                new(VER,  (user.Ver ?? 0).ToString()),
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

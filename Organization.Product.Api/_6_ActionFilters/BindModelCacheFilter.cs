@@ -6,6 +6,10 @@ namespace Organization.Product.Api._6_ActionFilters
     {
         public static readonly string KEY = "BindModelCacheFilterKey. This string can be anything.";
 
+        // static
+        // ----------------------------------------
+        // instance
+
         public void OnActionExecuting(ActionExecutingContext context)
         {
             context.HttpContext.Items[KEY] = context.ActionArguments;
