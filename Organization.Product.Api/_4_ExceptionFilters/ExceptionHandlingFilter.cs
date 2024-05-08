@@ -41,11 +41,11 @@ namespace Organization.Product.Api._4_ExceptionFilters
                 }
                 if (err.ID.StartsWith("W"))
                 {
-                    this._logger.LogWarning(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
+                    this._logger.LogWarning(null, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
                 }
                 else
                 {
-                    this._logger.LogError(ex, "{ID} {Message}{NewLine}{requestPayload}", err.ID, ex.Message, Environment.NewLine, requestPayload);
+                    this._logger.LogError(ex, "{ID} {Message}{NewLine}{requestPayload}{NewLine}", err.ID, ex.Message, Environment.NewLine, requestPayload, Environment.NewLine);
                 }
 
                 var errDto = new BaseResultDto() { Error = err };

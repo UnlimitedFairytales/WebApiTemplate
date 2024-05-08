@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
+using NLog.Extensions.Logging;
 using Organization.Product.Api._1_Middleware.ApiExplorer;
 using Organization.Product.Api._1_Middleware.Auth;
 using Organization.Product.Api._1_Middleware.CorsPolicy;
 using Organization.Product.Api._1_Middleware.JsonSerializerOptions;
-using Organization.Product.Api._1_Middleware.Log4Net;
 using Organization.Product.Api._1_Middleware.Swashbuckle;
 using Organization.Product.Api._4_ExceptionFilters;
 using Organization.Product.Api._6_ActionFilters;
@@ -21,7 +21,7 @@ namespace Organization.Product.Api
             // Logging settings
             builder.Logging
                 .ClearProviders()
-                .AddLog4Net(new Log4NetProviderOptions { LoggingEventFactory = new CustomLoggingEventFactory("Organization.Product.Api", "Aop") }); // log4net.config
+                .AddNLog();
 
             // Add services to the container.
             builder.Services.AddTransient<BindModelCacheFilter>();
@@ -51,8 +51,9 @@ namespace Organization.Product.Api
             var app = builder.Build();
 
             // Initialize LogAttribute
-            var defaultLogger = app.Logger;
-            LogAttribute.SetLogger(defaultLogger);
+            var loggerFactory = app.Services.GetService<ILoggerFactory>();
+            var logger = loggerFactory!.CreateLogger("Aop");
+            LogAttribute.SetLogger(logger);
 
             // Configure the HTTP request pipeline.
             var fhOption = new ForwardedHeadersOptions

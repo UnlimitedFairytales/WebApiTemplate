@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Organization.Product.ApplicationServices.Aop
 {
-    // Fodyの特性上、log4netからはメソッド名や行番号が取得できない
+    // Logger機能でソースの位置を出しても意味がないため、Aop箇所を自前で出力
     public class LogAttribute : OnMethodBoundaryAspect
     {
         static ILogger? _logger;
