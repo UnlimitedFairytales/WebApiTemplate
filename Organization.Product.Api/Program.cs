@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog.Extensions.Logging;
+using Organization.Product.Api._1_Middleware.AntiCsrf;
 using Organization.Product.Api._1_Middleware.ApiExplorer;
 using Organization.Product.Api._1_Middleware.Auth;
 using Organization.Product.Api._1_Middleware.CorsPolicy;
@@ -9,6 +10,7 @@ using Organization.Product.Api._1_Middleware.Swashbuckle;
 using Organization.Product.Api._4_ExceptionFilters;
 using Organization.Product.Api._6_ActionFilters;
 using Organization.Product.ApplicationServices.Aop;
+using Organization.Product.Shared.Configurations;
 
 namespace Organization.Product.Api
 {
@@ -40,6 +42,7 @@ namespace Organization.Product.Api
             builder.Services.MyAddApiVersioning_AddVersionedApiExplorer(builder.Configuration);
             builder.Services.MyAddTransient_AddSwaggerGen(builder.Configuration);
             builder.Services.AddCors(options => { options.MyAddCorsPolicies(builder.Configuration); });
+            builder.Services.MyAddAntiforgery(builder.Configuration);
             builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             builder.Services.AddApplicationServices(builder.Configuration);
@@ -64,7 +67,7 @@ namespace Organization.Product.Api
             {
                 app.UseSwagger();
                 // app.UseSwaggerUI();
-                app.MyUseSwaggerUI();
+                app.MyUseSwaggerUI(builder.Configuration);
             }
 
             app.UseHttpsRedirection();
@@ -74,6 +77,11 @@ namespace Organization.Product.Api
             app.MyUseAuthentication(builder.Configuration);
             app.UseAuthorization();
 
+            var antiCsrfOption = new AntiCsrfOption(builder.Configuration);
+            if (antiCsrfOption.Enabled)
+            {
+                app.MyUseAntiforgery();
+            }
 
             app.MapControllers();
 
@@ -263,7 +271,11 @@ ________________________________________________________________________________
 ________________________________________________________________________________
 # 10. MiddlewareとFilter
 ________________________________________________________________________________
+ASP.NET Core フィルター  
 https://learn.microsoft.com/ja-jp/aspnet/core/mvc/controllers/filters?view=aspnetcore-8.0
+
+囚われの依存関係  
+https://learn.microsoft.com/ja-jp/dotnet/core/extensions/dependency-injection-guidelines#captive-dependency
 
 MAREMA Action
 
@@ -271,7 +283,65 @@ MAREMA Action
 2. Authorization filter
 3. Resource filter
 4. Exception filter
-5. Model binding
+5. Model binding & OnActionExecuting/ed
 6. Action filter
+
+フィルタスコープ
+
+- グローバル。AddControllers(options => { options.Filters... }で追加
+- Class。クラスに属性付与
+- Action。メソッドに属性付与
+
+フィルタ追加方式
+
+追加方式              |TypeFilter         |ServiceFilter
+----------------------|-------------------|--------------------------
+DIコンテナへの登録    |不要               |必要
+追加方法（グローバル）|Filters.Add<T>()   |Filters.AddService<T>()
+追加方法（属性）      |[TypeFilter(Type)] |[ServiceFilter(Type)]
+ライフサイクル        |Scopedに近い挙動   |DIコンテナへの登録に準ずる
+
+-
+
+属性とIFilterFactory
+
+- 属性でフィルタの挙動を制御したい場合に従うパターン
+- TypeFilter属性もServiceFilter属性もこれを実装している
+- IFilterFactoryは、DIと属性を橋渡しする
+- 独自のマーカー属性を作りたい場合、これを直接実装する
+
+________________________________________________________________________________
+# 11. 標準CSRF対策ライブラリ
+________________________________________________________________________________
+ASP.NET Core でクロスサイト リクエスト フォージェリ (XSRF/CSRF) 攻撃を防止する  
+https://learn.microsoft.com/ja-jp/aspnet/core/security/anti-request-forgery?view=aspnetcore-8.0
+
+AntiforgeryMiddleware  
+https://source.dot.net/#Microsoft.AspNetCore.Antiforgery/AntiforgeryMiddleware.cs,ca607666f5a0089b,references
+
+DefaultAntiforgery.ValidateRequestAsync  
+https://source.dot.net/#Microsoft.AspNetCore.Antiforgery/Internal/DefaultAntiforgery.cs,7e422ec57f96940d,references
+
+FormFeature.ResolveHasInvalidAntiforgeryValidationFeature
+https://source.dot.net/#Microsoft.AspNetCore.Http/Features/FormFeature.cs,4fb217a16a499dc7,references
+
+要約
+
+- AddAntiforgeryで、各種DefaultAntiforgery○○などが登録される
+- UseAntiforgeryで、AntiforgeryMiddlewareがUseされる
+- AntiforgeryMiddlewareで、POST/PUT/PATCHかつIAntiforgeryMetadataが付与されたエンドポイントの場合、IAntiforgery.ValidateRequestAsyncを呼ぶ
+    - ExceptionFilterでハンドルされることを想定しているためか、検証失敗時に続行する
+    - Actionに引数がある場合、Model bindingの際にFormFeatureで例外が発生する
+- DefaultAntiforgery.ValidateRequestAsyncで、SSLであるか、CookieとHeaderが一致しているかをチェックする
+
+ValidateAntiForgeryTokenAttribute、AutoValidateAntiforgeryTokenAttributeについて
+
+- AntiforgeryMiddlewareとは無関係である
+    - IAuthorizationFilterである
+    - IAntiforgeryMetadataではない。IAntiforgeryPolicyをマーカーとする
+- AddControllersではエラーなる。AddViewServicesに依存している。例えば以下の呼び出しが必要
+    - AddControllersWithViews
+    - AddViewLocalization
+    - AddRazorPages
 
 */

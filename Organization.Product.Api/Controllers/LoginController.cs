@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Organization.Product.Api._1_Middleware.AntiCsrf;
 using Organization.Product.ApplicationServices.UseCases.Login;
 
 namespace Organization.Product.Api.Controllers
@@ -30,6 +31,7 @@ namespace Organization.Product.Api.Controllers
             throw new NotImplementedException();
         }
 
+        [IgnoreAntiforgery]
         [AllowAnonymous]
         [HttpPost]
         public LoginResultDto Login(LoginRequestDto requestDto)
@@ -37,6 +39,7 @@ namespace Organization.Product.Api.Controllers
             return this._useCase.Login(requestDto);
         }
 
+        [IgnoreAntiforgery]
         [HttpPost]
         public LoginResultDto Logout(LoginRequestDto _)
         {

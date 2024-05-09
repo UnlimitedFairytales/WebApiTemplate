@@ -38,6 +38,7 @@ namespace Organization.Product.Api
 
             // Options
             services.AddTransient<AuthOptions>();
+            services.AddTransient<AntiCsrfOption>();
 
             // _Sample
             services.AddTransient<WeatherForecastUseCase>();

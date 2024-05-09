@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Organization.Product.Api._1_Middleware.Auth;
+using Organization.Product.Shared.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Organization.Product.Api._1_Middleware.Swashbuckle
@@ -21,13 +22,30 @@ namespace Organization.Product.Api._1_Middleware.Swashbuckle
             });
         }
 
-        public static void MyUseSwaggerUI(this IApplicationBuilder app)
+        public static void MyUseSwaggerUI(this IApplicationBuilder app, IConfiguration configuration)
         {
             var provider = app.ApplicationServices.GetService<IApiVersionDescriptionProvider>();
             if (provider == null) return;
 
+            var antiCsrfOption = new AntiCsrfOption(configuration);
             app.UseSwaggerUI(options =>
             {
+                var jsText = "";
+                jsText += @"(req) => {";
+                jsText += @"    const splitted = document.cookie.split(';');";
+                jsText += @"    if (splitted != null && splitted != undefined) {";
+                jsText += @"        for (const kvp of splitted) {";
+                jsText += @"            const trimmed = kvp.trim();";
+                jsText += $"            if (trimmed.startsWith('{antiCsrfOption.RequestTokenName}')) {{";
+                jsText += @"                console.log(trimmed);";
+                jsText += @"                const tokenValue = trimmed.split('=')[1].trim();";
+                jsText += $"                req.headers['{antiCsrfOption.RequestTokenName}'] = tokenValue;";
+                jsText += @"            }";
+                jsText += @"        }";
+                jsText += @"    }";
+                jsText += @"    return req;";
+                jsText += @"}";
+                options.UseRequestInterceptor(jsText);
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
                     options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", $"WebApi {description.GroupName}");
