@@ -24,12 +24,10 @@ namespace Organization.Product.Api
                 .AddNLog();
 
             // Add services to the container.
-            builder.Services.AddTransient<BindModelCacheFilter>();
-            builder.Services.AddTransient<ExceptionHandlingFilter>();
-            builder.Services.AddControllers(configure =>
+            builder.Services.AddControllers(options =>
             {
-                configure.Filters.Add<BindModelCacheFilter>();
-                configure.Filters.Add<ExceptionHandlingFilter>();
+                options.Filters.Add<BindModelCacheFilter>();
+                options.Filters.Add<ExceptionHandlingFilter>();
             }).MyAddJsonOptions(builder.Configuration);
             builder.Services.MyAddAuthentication(builder.Configuration);
             builder.Services.AddAuthorizationBuilder()
@@ -218,7 +216,7 @@ https://learn.microsoft.com/ja-jp/aspnet/core/security/authentication/?view=aspn
 --------------------|----------------------------------------------------------------------------------------------
 認証サービス        |IAuthenticationService。認証ハンドラの決定、nullのときの調整などを行う薄い層。通常は標準を使用
 認証ハンドラ        |IAuthenticationHandler。実際の認証ロジック。Initialize、Authenticate、Challenge、Forbid
-認証スキーム        |DIに登録された認証ハンドラや構成オプションの1セットこと
+認証スキーム        |DIコンテナに登録された認証ハンドラや構成オプションの1セットこと
 認可ポリシー        |アプリケーション全体または認証スキームレベルで共通に設定するための認可設定
 認可属性            |ControllerやActionに個別に設定するための認可設定。Authorize、AllowAnonymous
 既定の認証スキーム名|AddAuthentication()時に指定可能な値。複数の認証スキームを登録した場合は明示的な指定が実質必須
