@@ -30,14 +30,17 @@ namespace Organization.Product.Api._1_Middleware.Auth.Cookie
                 new(ClaimTypes.Version, (user.Ver ?? 0).ToString()),
             };
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var claimPrincipal = new ClaimsPrincipal(claimsIdentity);
             var authProperties = new AuthenticationProperties()
             {
                 AllowRefresh = true
             };
+            
             this._httpContextAccessor.HttpContext!.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
+                claimPrincipal,
                 authProperties);
+            this._httpContextAccessor.HttpContext!.User = claimPrincipal;
             return new AppAuthenticationResult();
         }
 
