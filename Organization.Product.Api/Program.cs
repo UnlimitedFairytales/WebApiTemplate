@@ -6,6 +6,7 @@ using Organization.Product.Api._1_Middleware.ApiExplorer;
 using Organization.Product.Api._1_Middleware.Auth;
 using Organization.Product.Api._1_Middleware.CorsPolicy;
 using Organization.Product.Api._1_Middleware.JsonSerializerOptions;
+using Organization.Product.Api._1_Middleware.NoSniffHeader;
 using Organization.Product.Api._1_Middleware.Swashbuckle;
 using Organization.Product.Api._4_ExceptionFilters;
 using Organization.Product.Api._6_ActionFilters;
@@ -82,6 +83,7 @@ namespace Organization.Product.Api
             {
                 app.MyUseAntiforgery();
             }
+            app.UseNoSniffHeader();
 
             app.MapControllers();
 
