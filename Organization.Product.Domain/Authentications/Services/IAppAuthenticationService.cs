@@ -4,7 +4,7 @@ namespace Organization.Product.Domain.Authentications.Services
 {
     public interface IAppAuthenticationService
     {
-        AppAuthenticationResult Authenticate(string userCd, string? password);
-        void SignOut();
+        Task<AppAuthenticationResult> AuthenticateAsync(string userCd, string? password);
+        Task SignOutAsync();
     }
 }

@@ -69,7 +69,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Jwt
             this._appAuthenticatedUserRepository = appAuthenticatedUserRepository;
         }
 
-        public AppAuthenticationResult Authenticate(string userCd, string? password)
+        public async Task<AppAuthenticationResult> AuthenticateAsync(string userCd, string? password)
         {
             var user = this._appAuthenticatedUserRepository.FindBy(userCd, password!);
             var token = GenerateToken(
@@ -81,10 +81,10 @@ namespace Organization.Product.Api._1_Middleware.Auth.Jwt
                 this._authOptions.Jwt.Expire_Minute,
                 this._authOptions.Jwt.IssuerSigningKey,
                 user);
-            return new AppAuthenticationResult { Token = token };
+            return await Task.FromResult(new AppAuthenticationResult { Token = token });
         }
 
-        public void SignOut()
+        public Task SignOutAsync()
         {
             throw AppException.Create(AppMessage.W5006());
         }

@@ -20,7 +20,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Session
             this._appAuthenticatedUserRepository = appAuthenticatedUserRepository;
         }
 
-        public AppAuthenticationResult Authenticate(string userCd, string? password)
+        public async Task <AppAuthenticationResult> AuthenticateAsync(string userCd, string? password)
         {
             var user = this._appAuthenticatedUserRepository.FindBy(userCd, password!);
             var sessionToken = Guid.NewGuid().ToString("N");
@@ -38,7 +38,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Session
             {
                 AllowRefresh = true
             };
-            this._httpContextAccessor.HttpContext!.SignInAsync(
+            await this._httpContextAccessor.HttpContext!.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 claimPrincipal,
                 authProperties);
@@ -47,9 +47,10 @@ namespace Organization.Product.Api._1_Middleware.Auth.Session
             return new AppAuthenticationResult();
         }
 
-        public void SignOut()
+        public async Task SignOutAsync()
         {
             this._httpContextAccessor.HttpContext!.Session.Clear();
+            await Task.Delay(0);
         }
     }
 }

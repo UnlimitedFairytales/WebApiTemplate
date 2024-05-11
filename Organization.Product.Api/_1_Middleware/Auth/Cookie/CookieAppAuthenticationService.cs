@@ -19,7 +19,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Cookie
             this._appAuthenticatedUserRepository = appAuthenticatedUserRepository;
         }
 
-        public AppAuthenticationResult Authenticate(string userCd, string? password)
+        public async Task<AppAuthenticationResult> AuthenticateAsync(string userCd, string? password)
         {
             var user = this._appAuthenticatedUserRepository.FindBy(userCd, password!);
             var claims = new List<Claim>
@@ -36,7 +36,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Cookie
                 AllowRefresh = true
             };
             
-            this._httpContextAccessor.HttpContext!.SignInAsync(
+            await this._httpContextAccessor.HttpContext!.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 claimPrincipal,
                 authProperties);
@@ -44,7 +44,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Cookie
             return new AppAuthenticationResult();
         }
 
-        public void SignOut()
+        public Task SignOutAsync()
         {
             throw AppException.Create(AppMessage.W5006());
         }

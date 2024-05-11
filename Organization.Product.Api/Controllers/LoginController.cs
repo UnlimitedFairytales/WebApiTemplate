@@ -20,13 +20,13 @@ namespace Organization.Product.Api.Controllers
         }
 
         [HttpPost]
-        public LoginResultDto GetDialogMode()
+        public async Task<LoginResultDto> GetDialogMode()
         {
             throw new NotImplementedException();
         }
 
         [HttpPost]
-        public LoginResultDto SetUserPassword()
+        public async Task<LoginResultDto> SetUserPassword()
         {
             throw new NotImplementedException();
         }
@@ -34,16 +34,16 @@ namespace Organization.Product.Api.Controllers
         [IgnoreAntiforgery]
         [AllowAnonymous]
         [HttpPost]
-        public LoginResultDto Login(LoginRequestDto requestDto)
+        public async Task<LoginResultDto> Login(LoginRequestDto requestDto)
         {
-            return this._useCase.Login(requestDto);
+            return await this._useCase.LoginAsync(requestDto);
         }
 
         [IgnoreAntiforgery]
         [HttpPost]
-        public LoginResultDto Logout(LoginRequestDto _)
+        public async Task<LoginResultDto> Logout(LoginRequestDto _)
         {
-            return this._useCase.Logout();
+            return await this._useCase.LogoutAsync();
         }
     }
 }
