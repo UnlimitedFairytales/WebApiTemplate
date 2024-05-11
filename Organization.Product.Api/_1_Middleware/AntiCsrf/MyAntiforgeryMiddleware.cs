@@ -53,7 +53,9 @@ namespace Organization.Product.Api._1_Middleware.AntiCsrf
             catch (AntiforgeryValidationException e)
             {
                 // CHANGED: LogWarning追加
+#pragma warning disable CA2254 // テンプレートは静的な式にする必要があります
                 this._logger.LogWarning(e.Message + Environment.NewLine + e.StackTrace);
+#pragma warning restore CA2254 // テンプレートは静的な式にする必要があります
                 context.Features.Set<IAntiforgeryValidationFeature>(new AntiforgeryValidationFeature(false, e));
             }
             await _next(context);

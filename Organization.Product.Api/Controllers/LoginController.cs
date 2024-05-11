@@ -20,13 +20,13 @@ namespace Organization.Product.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<LoginResultDto> GetDialogMode()
+        public Task<LoginResultDto> GetDialogMode()
         {
             throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<LoginResultDto> SetUserPassword()
+        public Task<LoginResultDto> SetUserPassword()
         {
             throw new NotImplementedException();
         }
