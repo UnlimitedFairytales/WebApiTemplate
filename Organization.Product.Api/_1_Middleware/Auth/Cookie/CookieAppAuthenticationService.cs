@@ -35,7 +35,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Cookie
             {
                 AllowRefresh = true
             };
-            
+
             await this._httpContextAccessor.HttpContext!.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 claimPrincipal,

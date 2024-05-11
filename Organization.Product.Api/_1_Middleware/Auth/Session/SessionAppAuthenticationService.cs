@@ -20,7 +20,7 @@ namespace Organization.Product.Api._1_Middleware.Auth.Session
             this._appAuthenticatedUserRepository = appAuthenticatedUserRepository;
         }
 
-        public async Task <AppAuthenticationResult> AuthenticateAsync(string userCd, string? password)
+        public async Task<AppAuthenticationResult> AuthenticateAsync(string userCd, string? password)
         {
             var user = this._appAuthenticatedUserRepository.FindBy(userCd, password!);
             var sessionToken = Guid.NewGuid().ToString("N");
